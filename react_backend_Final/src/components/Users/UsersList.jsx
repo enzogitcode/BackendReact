@@ -19,6 +19,7 @@ const UsersList = () => {
         <p>{users.role}</p>
         <p>{users.first_name}</p>
         <p>{users.last_name}</p>
+        <p>{users.age}</p>
         <p>{users.email}</p>
         </div>))}
     </>
