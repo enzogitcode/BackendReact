@@ -1,0 +1,40 @@
+/* Header */
+#divHeader {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: 100dvw;
+    height: auto;
+    justify-content: space-between;
+}
+/* Buttons */
+.btnFonts {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+/* NavBar */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: flex-end;
+}
+ul {
+    display: inline-flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-right: 2em;
+}
+
+ul li {
+    margin: .5em;
+    padding: .5em;
+}
+
+/* Footer */
+#divFooter {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: 100dvw;
+    height: auto;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 0;
+}
