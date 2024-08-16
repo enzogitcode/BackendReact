@@ -24,7 +24,9 @@ main {
     background-image: url(../public/img/1201637-widescreen-island-wallpaper-for-desktop-2778x1964.jpg);
     background-position: center;
     background-repeat: none;
-    background-size: cover;
+    background-size:cover;
+    object-fit: cover;
+
 }
 
 

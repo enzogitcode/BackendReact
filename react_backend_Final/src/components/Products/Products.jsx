@@ -17,17 +17,15 @@ const Products = () => {
     }, [])
 
     return (
-        <div>
-            {products.map((products) => (<Card key={products._id}>
-                <Card.Body>
+        <div className='d-flex flex-wrap gap-6 bg-lightblue'>
+            {products.map((products) => (<div key={products._id} className='cardProduct text-center d-flex flex-column bg-white m-3 p-2 border-radius-xl text-wrap'>
                     <Card.Title>Título: {products.title}</Card.Title>
                     <Card.Text>Descripción: {products.description}</Card.Text>
                     <Card.Text>Código único:{products.code}</Card.Text>
                     <Card.Text>Precio: $ {products.price}</Card.Text>
                     <Card.Text>Stock: {products.stock}</Card.Text>
                     <NavLink to={`/api/products/`}><CustomButton title={"Ver detalles"}/></NavLink>
-                </Card.Body>
-            </Card>))}
+            </div>))}
         </div>
     )
 }

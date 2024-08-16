@@ -45,6 +45,8 @@ const Login = () => {
           inputType={'email'}
           inputPlaceholder={'E-mail'}
           labelText={'Email'}
+          value={data.email}
+          onChange={handleChange}
         />
         <CustomInput
           inputName={'password'}
