@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom'
 import { CustomInput, CustomButton } from '../generics/genericsModules'
 const Register = () => {
   return (
     <div id='register'
       className='text-center d-flex flex-wrap flex-column align-items-center my-3'>
+              <h2>Register</h2>
 <form action="">
       <CustomInput
         inputName={'first_name'}
@@ -23,6 +25,12 @@ const Register = () => {
         labelText={'Age'}
       />
       <CustomInput
+        inputName={'email'}
+        inputType={'email'}
+        inputPlaceholder={'E-mail'}
+        labelText={'E-mail'}
+      />
+      <CustomInput
         inputName={'password'}
         inputType={'password'}
         inputPlaceholder={'Password'}
@@ -30,7 +38,8 @@ const Register = () => {
       />
       <CustomButton title={"Registrate"}/>
       </form>
-
+      <p className='text-center'>¿Aún no estas registrado?</p>
+      <Link to={`/login`}>Login</Link>
     </div>
   )
 }

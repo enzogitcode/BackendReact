@@ -1,10 +1,21 @@
+/* Logo */
+#customLogo {
+    font-family: islandLogo;
+    font-size: 1.6em;
+    padding: .3em;
+    margin: .5em;
+    border-radius: 1em;
+    background-color: var(--colorAmarrilloClaro);
+}
 /* Header */
 #divHeader {
-    display: inline-flex;
+    display: flex;
     flex-wrap: wrap;
     width: 100dvw;
     height: auto;
     justify-content: space-between;
+    background: rgb(104,210,232);
+ background: linear-gradient(0deg, rgba(104,210,232,1) 20%, rgba(3,174,210,1) 40%);
 }
 /* Buttons */
 .btnFonts {
@@ -14,22 +25,37 @@
 nav {
     display: flex;
     flex-wrap: wrap;
-    justify-items: flex-end;
+    justify-items:flex-end
 }
 ul {
-    display: inline-flex;
+    display: flex;
     flex-wrap: wrap;
+    gap: 1em;
     list-style: none;
-    margin-right: 2em;
+    margin: 1em;
 }
 
 ul li {
-    margin: .5em;
+    text-wrap: wrap;
+    margin: .8em;
     padding: .5em;
+    background-color: var(--colorAmarrilloClaro);
+    border-radius: 1em; 
+}
+
+ul :hover {
+    text-decoration: underline var(--colorBrown);
+    background-color: var(--colorAmarilloOscuro);
+}
+
+/* customHome */
+#divLogoHome {
+    margin: 4.5em 5em;
+    background-color: aqua;
 }
 
 /* Footer */
-#divFooter {
+.divFooter {
     display: inline-flex;
     flex-wrap: wrap;
     width: 100dvw;
@@ -37,4 +63,5 @@ ul li {
     justify-content: center;
     align-content: center;
     margin-bottom: 0;
+    background: linear-gradient(180deg, rgba(254,239,173,1) 30%, rgba(253,222,85,1) 90%);
 }

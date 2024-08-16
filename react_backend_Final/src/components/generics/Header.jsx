@@ -1,11 +1,11 @@
 import React from 'react'
-import {NavBar} from './genericsModules'
+import { NavBar, Logo } from './genericsModules'
 
 const Header = () => {
   return (
     <div id='divHeader'>
-      <div>Logo</div>
-    <NavBar/>
+      <Logo />
+      <NavBar />
     </div>
   )
 }

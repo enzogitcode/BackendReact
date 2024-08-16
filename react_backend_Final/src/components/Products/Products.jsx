@@ -1,8 +1,9 @@
-import React from 'react'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
 import { Card, Button } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
 import { CustomButton } from '../generics/genericsModules'
+import { Link, NavLink } from 'react-router-dom'
+import { ProductDetails } from './modulosProducts'
 
 
 const Products = () => {
@@ -14,6 +15,7 @@ const Products = () => {
     useEffect(() => {
         fetchData()
     }, [])
+
     return (
         <div>
             {products.map((products) => (<Card key={products._id}>
@@ -23,7 +25,7 @@ const Products = () => {
                     <Card.Text>Código único:{products.code}</Card.Text>
                     <Card.Text>Precio: $ {products.price}</Card.Text>
                     <Card.Text>Stock: {products.stock}</Card.Text>
-                    <CustomButton title={"Agregar al carrito"} />
+                    <NavLink to={`/api/products/`}><CustomButton title={"Ver detalles"}/></NavLink>
                 </Card.Body>
             </Card>))}
         </div>

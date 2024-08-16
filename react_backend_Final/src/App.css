@@ -1,6 +1,30 @@
+@font-face {
+  font-family: islandLogo;
+  src: url('../src//assets/fonts/IslandFontLogoss.ttf');
+}
 * {
  margin: 0;
  padding: 0;
  box-sizing: border-box; 
 }
+:root {
+    --azulCieloOscuro: #03AED2;
+    --azulCelesteCielo: #68D2E8;
+    --colorAmarrilloClaro: #FEEFAD;
+    --colorAmarilloOscuro: #FDDE55;
+    --colorBrown: #a52a2a;
+}
+
+main {
+    /* background: #22c1c3;
+    background: linear-gradient(
+      to top,
+      #22c1c3,#fdbb2d
+    ); */
+    background-image: url(../public/img/1201637-widescreen-island-wallpaper-for-desktop-2778x1964.jpg);
+    background-position: center;
+    background-repeat: none;
+    background-size: cover;
+}
+
 

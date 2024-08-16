@@ -2,9 +2,9 @@ import React from 'react'
     import { Button } from 'react-bootstrap'
     
 
-const CustomButton = ({title}) => {
+const CustomButton = ({title, btnType}) => {
   return (
-    <button className='btn btn-primary text-center'>{title}</button>
+    <button type={btnType} className='btn btn-primary text-center'>{title}</button>
   )
 }
 

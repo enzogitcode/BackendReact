@@ -1,23 +1,27 @@
 import React from 'react'
 import './generics.css'
+import { Link } from 'react-router-dom'
 
 const NavBar = () => {
-  const user= 'premium'
-        if (user == 'admin'  ) {
+  const user= 'admin'
+        if (user == 'premium'  ) {
           return (
             <nav>
         <ul>
           <li>Rol: premium</li>
-          <li>Mis Productos</li>
+          <li><Link to={`/realtimeproducts`} >Agregar un Producto</Link></li>
+          <li><Link to={`api/users/products`}>Mis Productos</Link></li>
+          <li><Link to={`api/users/products`}></Link></li>
           <li>Profile</li>
         </ul>
         </nav>
         )
       }
-        else if (user == 'premium') {
+        else if (user == 'admin') {
           return (
         <nav><ul>
-          <li>Rol: Premium</li>
+          <li>Rol: Admin</li>
+          <li><Link to={`/realtimeproducts`}>Agregar un producto</Link></li>
           <li>Mis Productos</li>
           <li>Todos los productos</li>
           <li>Profile</li>
@@ -41,8 +45,8 @@ const NavBar = () => {
           return (<nav>
             <ul>
             <li>No hay usuario</li>
-              <li>Login</li>
-              <li>Registrate</li>
+              <li><Link to={`/login`}>Login</Link></li>
+              <li><Link to={`/register`}>Register</Link></li>
             </ul>            
           </nav>
           )
