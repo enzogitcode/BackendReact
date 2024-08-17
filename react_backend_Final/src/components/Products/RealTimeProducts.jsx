@@ -18,8 +18,8 @@ const RealTimeProducts = () => {
       axios.post('http://localhost:8080/api/products', { ...newProduct })
       .then(response => { console.log(response) })
       setShowProduct(true)
-      //cardproduct debe ir después sino toma los inputs vacíos
       CardProduct()
+      //cardproduct debe ir después sino toma los inputs vacíos
         setTitle("")
         setPrice("")
         setDescription("")

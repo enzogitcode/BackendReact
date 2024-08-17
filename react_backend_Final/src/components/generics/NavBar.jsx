@@ -12,7 +12,11 @@ const NavBar = () => {
           <li><Link to={`/realtimeproducts`} >Agregar un Producto</Link></li>
           <li><Link to={`api/users/products`}>Mis Productos</Link></li>
           <li><Link to={`api/users/products`}></Link></li>
-          <li>Profile</li>
+          <li>
+            <Link to={`/profile`}>
+              Profile
+            </Link>
+          </li>
         </ul>
       </nav>
     )
@@ -29,7 +33,11 @@ const NavBar = () => {
         <li>
           <Link to={`api/users`}>Todos los usuarios</Link>
         </li>
-        <li>Profile</li>
+        <li>
+          <Link to={`/profile`}>
+            Profile
+          </Link>
+        </li>
       </ul>
       </nav>
     )
@@ -41,7 +49,11 @@ const NavBar = () => {
           <li>Rol: usuario</li>
           <li>Productos</li>
           <li>Chat</li>
-          <li>Profile</li>
+          <li>
+            <Link to={`/profile`}>
+              Profile
+            </Link>
+          </li>
         </ul>
       </nav>
     )
