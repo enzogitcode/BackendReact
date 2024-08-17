@@ -1,4 +1,4 @@
-function generateMixedCode() {
+export function generateMixedCode() {
     // Get a random number between 0 and 999
     const randomNumber = Math.floor(Math.random() * 1000);
     // Format the number with leading zeros if necessary
@@ -14,5 +14,3 @@ function generateMixedCode() {
     const mixedCode = firstLetter + secondLetter + thirdLetter + formattedNumber;
     return mixedCode;
 }
-
-export const randomCode = generateMixedCode();
