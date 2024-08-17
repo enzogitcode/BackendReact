@@ -9,7 +9,7 @@ const Footer = () => {
     }
     else if (user == 'carrito vacío') {
       return (
-        <div className='divFooter text-center'>
+        <div className='divFooter text-center d-flex flex-column'>
           <p>El carrito está Vacío</p>
         </div>
       )

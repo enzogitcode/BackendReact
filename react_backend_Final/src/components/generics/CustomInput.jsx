@@ -6,7 +6,6 @@ const CustomInput =({inputName, inputType, inputId, inputPlaceholder, labelFor, 
   return (
     <div className="form-floating mb-3">
   <input name={inputName} type={inputType} className="form-control" placeholder={inputPlaceholder}
-  onChange={handleChange}
   />
   <label htmlFor="floatingInput">{labelText}</label>
 </div>

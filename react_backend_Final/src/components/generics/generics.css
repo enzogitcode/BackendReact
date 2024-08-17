@@ -48,11 +48,8 @@ ul :hover {
     background-color: var(--colorAmarilloOscuro);
 }
 
-/* customHome */
-#divLogoHome {
-    margin: 4.5em 5em;
-    background-color: aqua;
-}
+/* Home */
+
 
 /* Footer */
 .divFooter {
