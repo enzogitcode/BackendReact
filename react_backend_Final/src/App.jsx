@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Router, Route } from 'react-router-dom';
 import Home from './components/generics/Home';
 import { Header, Footer} from './components/generics/genericsModules'
 import { Login, Register, UsersList } from './components/Users/userModulo'
-import { Products, RealTimeProducts } from './components/Products/modulosProducts'
+import { Products, RealTimeProducts, MyProducts } from './components/Products/modulosProducts'
 export default function App() {
   return (
     <>
@@ -20,6 +20,7 @@ export default function App() {
 <Route path='/api/users' element={<UsersList/>}/>
 {/* Rutas de productos */}
 <Route path='/realtimeproducts' element={<RealTimeProducts/>}/>
+<Route path='/myproducts' element={<MyProducts/>}/>
 <Route path='/api/products' element={<Products/>}/>
 <Route path='/api/products/:pid' element={<Products/>}/>
 {/* Rutas del carrito */}

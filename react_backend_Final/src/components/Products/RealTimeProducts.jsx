@@ -7,6 +7,8 @@ const RealTimeProducts = () => {
   const [price, setPrice] = useState('')
   const [stock, setStock] = useState('')
   const [category, setCategory] = useState('')
+  const [showProduct, setShowProduct] = useState(false);
+
 
   const newProduct = { title, category, price, stock, description }
 
@@ -14,19 +16,23 @@ const RealTimeProducts = () => {
     e.preventDefault()
     try {
       axios.post('http://localhost:8080/api/products', { ...newProduct })
-        .then(response => { console.log(response) })
-      setTitle("")
-      setPrice("")
-      setDescription("")
-      setStock("")
-      setCategory("")
+      .then(response => { console.log(response) })
+      setShowProduct(true)
+      //cardproduct debe ir después sino toma los inputs vacíos
+      CardProduct()
+        setTitle("")
+        setPrice("")
+        setDescription("")
+        setStock("")
+        setCategory("")
+
     } catch (error) {
       console.log(error)
     }
   }
 
   return (
-    <div className='d-flex flex-column'>
+    <div className='d-flex flex-column flex-wrap'>
 
       <form action="" onSubmit={handleSubmit}>
         <input name='title' value={title}
@@ -48,10 +54,14 @@ const RealTimeProducts = () => {
         <input name='description' value={category}
           onChange={(e) => setCategory(e.target.value)} />
         <label htmlFor='description' className='bg-white'>Category</label>
-        <button>Submit</button>
+        <button type='submit'>Submit</button>
       </form>
+      {showProduct == true ?<CardProduct newProduct={newProduct} />: <div>Llena el formulario</div>}
     </div>
   )
 }
+const CardProduct = ({ newProduct }) => {
+  return <div>¡{newProduct.title} {newProduct.price} {newProduct.stock}creado con éxito!</div>;
+};
 
 export default RealTimeProducts

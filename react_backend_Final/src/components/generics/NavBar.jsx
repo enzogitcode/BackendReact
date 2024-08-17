@@ -22,9 +22,12 @@ const NavBar = () => {
       <nav><ul>
         <li>Rol: Admin</li>
         <li><Link to={`/realtimeproducts`}>Agregar un producto</Link></li>
-        <li>Mis Productos</li>
+        <li><Link to={`/myproducts`}>Mis Productos</Link></li>
         <li>
           <Link to={`api/products`}>Todos los productos</Link>
+        </li>
+        <li>
+          <Link to={`api/users`}>Todos los usuarios</Link>
         </li>
         <li>Profile</li>
       </ul>

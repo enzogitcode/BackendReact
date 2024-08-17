@@ -1,5 +1,5 @@
 import ProductModel from "../models/product.model.js"
-import {randomCode} from '../utils/randomCode.js'
+import { generateMixedCode} from '../utils/randomCode.js'
 
 class ProductRepository {
     async getProducts() {
@@ -48,7 +48,7 @@ class ProductRepository {
                 stock,
                 category,
                 img,
-                code: randomCode,
+                code: generateMixedCode(),
                 status: true,
                 thumbnails: thumbnails || []
             });

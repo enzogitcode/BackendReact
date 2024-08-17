@@ -14,7 +14,7 @@ const UsersList = () => {
 
   return (
     <>
-    {users.map((users) => (<div key={users._id}>
+    {users.map((users) => (<div className='bg-white' key={users._id}>
         <p>{users._id}</p>
         <p>{users.role}</p>
         <p>{users.first_name}</p>
