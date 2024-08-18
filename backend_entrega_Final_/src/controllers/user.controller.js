@@ -2,15 +2,20 @@ import UserModel from '../models/user.model.js'
 import CartModel from '../models/cart.model.js'
 import UserRepository from '../repositories/user.repository.js'
 const userRepository = new UserRepository()
+import CartRepository from '../repositories/cart.repository.js'
+const cartRepository = new CartRepository()
+import CartController from './cart.controller.js'
+const cartController= new CartController()
 import { createHash, isValidPassword } from '../utils/hashbcrypt.js'
 import jwt from 'jsonwebtoken'
-import passport from 'passport'
 import config from '../config/config.js'
 const SECRET = config.SECRET
 import { uploader } from '../middleware/multer.js'
-import upload from 'multer'
-import path from 'path'
+/* import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename); */
 
 
 class UserController {
@@ -112,7 +117,6 @@ class UserController {
         //esta parte si
     }
 
-
     async uploadFiles(req, res) {
         const { uid } = req.params
         //const userId= req.params.uid
@@ -165,7 +169,6 @@ class UserController {
             await user.save()
             return user;
 
-
         } catch (error) {
             console.log(error)
             res.send(error)
@@ -181,19 +184,34 @@ class UserController {
         }
     }
     async deleteUser(req, res) {
-        const { uid } = req.params
+        const userId = req.params.uid
         try {
-            const user = await UserModel.findByIdAndDelete({ _id: uid })
+            const user = await UserModel.findById(userId)
+            const userCartsId= user.carts.toString()
+            const carts= await CartModel.findByIdAndDelete(userCartsId)
+            const deletedUser = await UserModel.findByIdAndDelete(userId)
             if (!user) {
                 res.send({ message: "no existe un user con ese Id" })
-
             }
-            res.status(201).send({ message: "usuario eliminado con éxito" })
-            console.log("usuario eliminado con éxito", user)
+            
+            console.log("usuario eliminado con éxito", user, deletedUser, carts)
 
         } catch (error) {
-            res.send(error)
             console.log(error)
+            res.send(error)
+        }
+    }
+    async getUserById(req, res) {
+        const { uid } = req.params
+        try {
+            const user = await UserModel.findById({ _id: uid })
+            if (!user) {
+                res.json("no existe un usuario con ese Id")
+            }
+            res.json(user)
+        } catch (error) {
+            console.log(error)
+            res.json(error)
         }
     }
 }

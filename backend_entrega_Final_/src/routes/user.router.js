@@ -5,8 +5,12 @@ const userController = new UserController()
 import passport from 'passport'
 import {uploader} from '../middleware/multer.js'
 
+//creadas por mí para ver usuarios y eliminarlos
 router.get("/", userController.getAllUsers)
-router.delete("/:uid", userController.deleteUser)
+router.get("/:uid", userController.getUserById)
+router.delete("/delete/:uid", userController.deleteUser)
+
+
 router.post("/login", userController.login)
 router.post("/register", userController.register)
 router.post("/logout", userController.logout.bind(userController))

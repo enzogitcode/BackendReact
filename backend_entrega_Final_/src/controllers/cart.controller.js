@@ -17,6 +17,16 @@ class CartController {
             console.log(error)
         }
     }
+    async deleteCart(req, res) {
+        const cartId= req.params.cid
+        try {
+            const cart = await cartRepository.deleteCart(cartId)
+            res.status(201).json({message: "carrito eliminado correctamente", cart})
+        } catch (error) {
+            console.log(error)
+            res.send(error)
+        }
+    }
     async newCart(req, res) {
         try {
             const newCart = await cartRepository.createCart()
@@ -80,8 +90,8 @@ class CartController {
             res.json(cart)
 
         } catch (error) {
-            console.log(error)
             res.json(error)
+            console.log(error)
         }
     }
     async updateCart(req, res) {
@@ -130,6 +140,7 @@ class CartController {
                 console.log("No existe un carrito con ese Id")
                 res.send("No existe un carrito con ese Id")
             }
+            
             const newTicket = await TicketModel.create({
                 email: email,
                 code: ticketCode,

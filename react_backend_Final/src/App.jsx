@@ -5,6 +5,7 @@ import Home from './components/generics/Home';
 import { Header, Footer} from './components/generics/genericsModules'
 import { Login, Profile, Register, UsersList } from './components/Users/userModulo'
 import { Products, RealTimeProducts, MyProducts } from './components/Products/modulosProducts'
+import AddProducts from './components/Products/AddProducts';
 export default function App() {
   return (
     <>
@@ -20,7 +21,7 @@ export default function App() {
 <Route path='/api/users' element={<UsersList/>}/>
 <Route path='/profile' element={<Profile/>}/>
 {/* Rutas de productos */}
-<Route path='/realtimeproducts' element={<RealTimeProducts/>}/>
+<Route path='/addproducts' element={<AddProducts/>}/>
 <Route path='/myproducts' element={<MyProducts/>}/>
 <Route path='/api/products' element={<Products/>}/>
 <Route path='/api/products/:pid' element={<Products/>}/>

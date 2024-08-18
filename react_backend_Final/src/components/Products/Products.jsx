@@ -18,7 +18,7 @@ const Products = () => {
 
     return (
         <div className='d-flex flex-wrap gap-6 bg-lightblue'>
-            {products.map((products) => (<div key={products._id} className='cardProduct text-center d-flex flex-column bg-white m-3 p-2 border-radius-xl text-wrap'>
+            {products.map((products) => (<div key={products.code} className='cardProduct text-center d-flex flex-column bg-white m-3 p-2 border-radius-xl text-wrap'>
                     <Card.Title>Título: {products.title}</Card.Title>
                     <Card.Text>Descripción: {products.description}</Card.Text>
                     <Card.Text>Código único:{products.code}</Card.Text>
