@@ -9,7 +9,7 @@ const NavBar = () => {
       <nav>
         <ul>
           <li>Rol: premium</li>
-          <li><Link to={`/realtimeproducts`} >Agregar un Producto</Link></li>
+          <li><Link to={`/addproducts`} >Agregar un Producto</Link></li>
           <li><Link to={`api/users/products`}>Mis Productos</Link></li>
           <li><Link to={`api/users/products`}></Link></li>
           <li>
@@ -25,7 +25,7 @@ const NavBar = () => {
     return (
       <nav><ul>
         <li>Rol: Admin</li>
-        <li><Link to={`/realtimeproducts`}>Agregar un producto</Link></li>
+        <li><Link to={`/addproducts`}>Agregar un producto</Link></li>
         <li><Link to={`/myproducts`}>Mis Productos</Link></li>
         <li>
           <Link to={`api/products`}>Todos los productos</Link>
