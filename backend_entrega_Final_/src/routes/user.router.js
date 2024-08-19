@@ -24,9 +24,8 @@ router.post("/:uid/documents", uploader.fields([
 ]),
 userController.uploadFiles)
 
-
 //nueva ruta cambiar roles
 //sólo actualizar a premium si han cargado: Identificación, Comprobante de domicilio, Comprobante de estado de cuenta
-router.put("/api/users/premium/:uid", userController.changeRoles)
+router.put("/premium/:uid", userController.changeRoles)
 
 export default router

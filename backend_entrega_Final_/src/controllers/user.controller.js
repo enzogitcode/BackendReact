@@ -5,7 +5,7 @@ const userRepository = new UserRepository()
 import CartRepository from '../repositories/cart.repository.js'
 const cartRepository = new CartRepository()
 import CartController from './cart.controller.js'
-const cartController= new CartController()
+const cartController = new CartController()
 import { createHash, isValidPassword } from '../utils/hashbcrypt.js'
 import jwt from 'jsonwebtoken'
 import config from '../config/config.js'
@@ -29,12 +29,12 @@ class UserController {
             }
             const newCart = new CartModel();
             const newUser = new UserModel({
+                carts: newCart._id,
                 first_name,
                 last_name,
                 email,
                 age,
                 password: createHash(password),
-                carts: newCart._id,
                 role,
                 documents,
                 last_connection
@@ -125,6 +125,7 @@ class UserController {
             if (!user) {
                 return res.status(400).send({ status: "error", error: "No existe un usuario con ese Id" })
             }
+            
             if (!req.files) {
                 return res.status(400).send({ status: "error", error: "No se pudo guardar la imagen" })
             }
@@ -147,6 +148,13 @@ class UserController {
                     user.documents.push(productsObjects)
                 })
             }
+            const uniqueObject = {};
+            for (const doc of user.documents) {
+                const name = doc.name;
+                uniqueObject[name] = doc;
+            }
+            const result = Object.values(uniqueObject);
+            user.documents= result
             await user.save()
             console.log(user)
             res.json(user)
@@ -160,14 +168,25 @@ class UserController {
     async changeRoles(req, res) {
         const { uid } = req.params
         try {
-            const user = await UserModel.findByIdAndUpdate({ _id: uid })
+            const user = await UserModel.findById({ _id: uid })
             if (!user) {
                 console.log("No existe un usuario con ese Id")
                 res.send("No existe un usuario con ese Id")
             }
-            console.log(user.role)
+
+            const docsNames = []
+            user.documents.forEach(element => {
+                docsNames.push(element.name.split('.').slice(0, 1).shift())
+            })
+            console.log(docsNames)
+            if (docsNames.includes('identificacion' && 'comprobante de domicilio' && 'comprobante de estado de cuenta')) {
+                res.json("premium")
+            }
+            else { res.json("user") }
+
+            /* console.log(user.role)
             await user.save()
-            return user;
+            return user; */
 
         } catch (error) {
             console.log(error)
@@ -179,21 +198,20 @@ class UserController {
             const users = await UserModel.find()
             res.json(users)
         } catch (error) {
-            res.status(500).send({ message: "No se pueden ver los usuarios" })
-            console.log(error)
+            res.status(500).send({ message: "No se pueden ver los usuarios" }, error)
         }
     }
     async deleteUser(req, res) {
         const userId = req.params.uid
         try {
             const user = await UserModel.findById(userId)
-            const userCartsId= user.carts.toString()
-            const carts= await CartModel.findByIdAndDelete(userCartsId)
+            const userCartsId = user.carts.toString()
+            const carts = await CartModel.findByIdAndDelete(userCartsId)
             const deletedUser = await UserModel.findByIdAndDelete(userId)
             if (!user) {
                 res.send({ message: "no existe un user con ese Id" })
             }
-            
+
             console.log("usuario eliminado con éxito", user, deletedUser, carts)
 
         } catch (error) {
@@ -215,6 +233,5 @@ class UserController {
         }
     }
 }
-
 
 export default UserController
