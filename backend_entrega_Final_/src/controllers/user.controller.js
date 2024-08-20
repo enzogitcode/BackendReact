@@ -154,7 +154,7 @@ class UserController {
                 uniqueObject[name] = doc;
             }
             const result = Object.values(uniqueObject);
-            user.documents= result
+            user.documents = result
             await user.save()
             res.json(user)
 
@@ -164,7 +164,7 @@ class UserController {
         }
     }
 
-    async changeRoles(req, res) {
+    async changeRole(req, res) {
         const { uid } = req.params
         try {
             const user = await UserModel.findById({ _id: uid })
@@ -172,20 +172,17 @@ class UserController {
                 console.log("No existe un usuario con ese Id")
                 res.send("No existe un usuario con ese Id")
             }
-            const docsNames = []
-            user.documents.forEach(element => {
-                docsNames.push(element.name.split('.').slice(0, 1).shift())
-            })
-            console.log(docsNames)
+            const docsNames = user.documents.map(
+                element => element.name.split('.').slice(0, 1).shift())
             if (docsNames.includes('identificacion' && 'comprobante de domicilio' && 'comprobante de estado de cuenta')) {
-                user.role == 'premium'
+const newRole = user.role === 'user' ? 'premium' : 'user'
+                const updatedUser = await userRepository.changeRole(uid, newRole);
+                console.log(updatedUser)
+                res.json(updatedUser);
             }
-            else { user.role == 'user' 
+            else {
+                return res.status(400).json({ message: 'El usuario debe cargar los siguientes documentos: Identificación, Comprobante de domicilio, Comprobante de estado de cuenta' });
             }
-            console.log(user)
-            console.log(user.role)
-            await user.save()
-            return user;
 
         } catch (error) {
             console.log(error)
@@ -203,9 +200,12 @@ class UserController {
     async deleteUser(req, res) {
         const userId = req.params.uid
         try {
-            const user = await UserModel.findById(userId)
-            const userCartsId = user.carts.toString()
-            const carts = await CartModel.findByIdAndDelete(userCartsId)
+            const user = await userRepository.getUserById(userId)
+            if (!user) {
+                res.json("no existe un usuario con ese id")
+            }
+            await CartModel.findByIdAndDelete(user.carts.toString())
+
             const deletedUser = await UserModel.findByIdAndDelete(userId)
             if (!user) {
                 res.send({ message: "no existe un user con ese Id" })
@@ -221,25 +221,25 @@ class UserController {
     async getUserById(req, res) {
         const { uid } = req.params
         try {
-            const user = await UserModel.findById({ _id: uid })
+            const user = await userRepository.getUserById({ _id: uid })
             if (!user) {
                 res.json("no existe un usuario con ese Id")
             }
             res.json(user)
         } catch (error) {
-            res.json(error)
             console.log(error)
+            res.json(error)
         }
     }
-    async clearDocs(req,res) {
-        const {uid} = req.params
+    async clearDocs(req, res) {
+        const { uid } = req.params
         try {
             const user = await UserModel.findByIdAndUpdate({ _id: uid })
             if (!user) {
                 res.json("no existe un usuario con ese Id")
             }
-            user.documents= []
-            await user.save()           
+            user.documents = []
+            await user.save()
             res.json(user)
         } catch (error) {
             console.log(error)
