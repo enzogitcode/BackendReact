@@ -14,16 +14,17 @@ const storage = multer.diskStorage({
     }
   },
   filename: function (req, file, cb) {
-    if (file.fieldname === 'profile') {
-      const originalExtension = file.originalname.split('.').pop();
-      const newFilename = `profile.${originalExtension}`.toLowerCase;
-      cb(null, file.filename = newFilename);
-    }
-    else if (file.fieldname === 'documents') {
-      cb(null, file.filename = file.originalname.toLowerCase())
-    }
-    else {
-      cb(null, file.originalname)
+    switch (file.fieldname) {
+      case 'profile':
+        const originalExtension = file.originalname.split('.').pop();
+        const newFilename = `profile.${originalExtension}`.toLowerCase();
+        cb(null, file.originalname = newFilename);
+        break;
+      case 'documents':
+        cb(null, file.filename = file.originalname.toLowerCase())
+        break;
+      default:
+        cb(null, file.originalname)
     }
   }
 })
@@ -32,6 +33,7 @@ export const uploader = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
     if (file.fieldname === 'documents') {
+      //switch (file.fieldname) { case 'documents':
       const allowedNames = ['identificacion', 'comprobante de domicilio', 'comprobante de estado de cuenta'];
       const allowedExtensions = /jpeg|jpg|png|gif|pdf|doc|docx/;
 
@@ -45,5 +47,9 @@ export const uploader = multer({
         cb(new Error('Solo se permite subir archivos llamados "identificacion", "comprobante de domicilio" o "comprobante de estado de cuenta" con extensiones válidas en el campo "documents"'));
       }
     }
+    else {
+      cb(null, true)
+    }
   }
+  
 })

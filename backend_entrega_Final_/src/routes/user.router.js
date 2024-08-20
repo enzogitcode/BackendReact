@@ -27,5 +27,6 @@ userController.uploadFiles)
 //nueva ruta cambiar roles
 //sólo actualizar a premium si han cargado: Identificación, Comprobante de domicilio, Comprobante de estado de cuenta
 router.put("/premium/:uid", userController.changeRoles)
+router.put("/cleardocs/:uid", userController.clearDocs)
 
 export default router

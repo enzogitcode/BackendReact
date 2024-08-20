@@ -125,7 +125,7 @@ class UserController {
             if (!user) {
                 return res.status(400).send({ status: "error", error: "No existe un usuario con ese Id" })
             }
-            
+
             if (!req.files) {
                 return res.status(400).send({ status: "error", error: "No se pudo guardar la imagen" })
             }
@@ -156,7 +156,6 @@ class UserController {
             const result = Object.values(uniqueObject);
             user.documents= result
             await user.save()
-            console.log(user)
             res.json(user)
 
         } catch (error) {
@@ -173,20 +172,20 @@ class UserController {
                 console.log("No existe un usuario con ese Id")
                 res.send("No existe un usuario con ese Id")
             }
-
             const docsNames = []
             user.documents.forEach(element => {
                 docsNames.push(element.name.split('.').slice(0, 1).shift())
             })
             console.log(docsNames)
             if (docsNames.includes('identificacion' && 'comprobante de domicilio' && 'comprobante de estado de cuenta')) {
-                res.json("premium")
+                user.role == 'premium'
             }
-            else { res.json("user") }
-
-            /* console.log(user.role)
+            else { user.role == 'user' 
+            }
+            console.log(user)
+            console.log(user.role)
             await user.save()
-            return user; */
+            return user;
 
         } catch (error) {
             console.log(error)
@@ -226,6 +225,21 @@ class UserController {
             if (!user) {
                 res.json("no existe un usuario con ese Id")
             }
+            res.json(user)
+        } catch (error) {
+            res.json(error)
+            console.log(error)
+        }
+    }
+    async clearDocs(req,res) {
+        const {uid} = req.params
+        try {
+            const user = await UserModel.findByIdAndUpdate({ _id: uid })
+            if (!user) {
+                res.json("no existe un usuario con ese Id")
+            }
+            user.documents= []
+            await user.save()           
             res.json(user)
         } catch (error) {
             console.log(error)
