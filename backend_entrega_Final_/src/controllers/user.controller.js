@@ -175,7 +175,7 @@ class UserController {
             const docsNames = user.documents.map(
                 element => element.name.split('.').slice(0, 1).shift())
             if (docsNames.includes('identificacion' && 'comprobante de domicilio' && 'comprobante de estado de cuenta')) {
-const newRole = user.role === 'user' ? 'premium' : 'user'
+                const newRole = user.role === 'user' ? 'premium' : 'user'
                 const updatedUser = await userRepository.changeRole(uid, newRole);
                 console.log(updatedUser)
                 res.json(updatedUser);
@@ -208,7 +208,7 @@ const newRole = user.role === 'user' ? 'premium' : 'user'
 
             const deletedUser = await UserModel.findByIdAndDelete(userId)
             if (!user) {
-                res.send({ message: "no existe un user con ese Id" })
+                res.json({ message: "no existe un user con ese Id" })
             }
 
             console.log("usuario eliminado con éxito", user, deletedUser, carts)

@@ -13,9 +13,9 @@ class CartRepository {
             console.log(error)
         }
     }
-    async deleteCart (cartId) {
+    async deleteCart(cartId) {
         try {
-            const cart= await CartModel.findByIdAndDelete(cartId)
+            const cart = await CartModel.findByIdAndDelete(cartId)
             return cart
         } catch (error) {
             console.log(error)
@@ -159,34 +159,16 @@ class CartRepository {
 
         }
     }
-    async purchase(cid) {
+    async purchase(cartId) {
         try {
-            const user = await UserModel.findOneAndUpdate({ cartId:cid })
-            if (!user) {
-                console.log("No existe un usuario con ese email")
+            const cart = await CartModel.findById(cartId)
+            if (!cart) {
+                console.log("No existe un carrito con ese Id")
             }
-            const cart = user.carts.findIndex(item => item._id.toString() === user._id)
-            if (cart !== -1) {
-                const newTicket = await TicketModel.create({
-                    email: email,
-                    code: ticketCode,
-                    purchase_dateTime: Date.toString(),
-                    amount,
-                    purchaser
-                })
-
-                await newTicket.save()
-                user.markModified('carts');
-                await user.save();
-                return user;
-
-            }
-            else {
-                throw new Error('Carrito no encontrado');
-            }
+            return cart
 
         } catch (error) {
-
+            console.log(error)
         }
 
     }

@@ -4,8 +4,8 @@ import ProductRepository from '../repositories/product.repository.js'
 const productRepository = new ProductRepository()
 import TicketModel from "../models/ticket.model.js"
 import { v4 as uuidv4 } from 'uuid'
-const ticketCode = uuidv4()
-import {totalPurchase} from '../utils/totalPurchase.js'
+import { ticketCode } from '../utils/randomCode.js'
+import { totalPurchase } from '../utils/totalPurchase.js'
 
 
 class CartController {
@@ -18,10 +18,10 @@ class CartController {
         }
     }
     async deleteCart(req, res) {
-        const cartId= req.params.cid
+        const cartId = req.params.cid
         try {
             const cart = await cartRepository.deleteCart(cartId)
-            res.status(201).json({message: "carrito eliminado correctamente", cart})
+            res.status(201).json({ message: "carrito eliminado correctamente", cart })
         } catch (error) {
             console.log(error)
             res.send(error)
@@ -111,7 +111,7 @@ class CartController {
         const newQuantity = req.body;
         try {
             const updatedCart = await cartRepository.updateProductQuantity(cartId, productId, newQuantity.quantity);
-            console.log("Cantidades actualizadas con éxito")
+            console.log("Cantidades actualizadas con éxito", updatedCart)
             res.json(updatedCart);
         } catch (error) {
             console.log(error)
@@ -138,20 +138,26 @@ class CartController {
             const cart = await cartRepository.getCartById(cartId)
             if (!cart) {
                 console.log("No existe un carrito con ese Id")
-                res.send("No existe un carrito con ese Id")
+                res.json({ message: "No existe un carrito con ese Id" })
             }
-            
-            const newTicket = await TicketModel.create({
-                email: email,
-                code: ticketCode,
+            let total= []
+            cart.products.forEach(item => total.push(item.quantity * item.product.price))
+const totalFinal= total.reduce((acc, item) => parseInt(acc + item), 0)
+            console.log(total)
+            res.json({ totalFinal })
+            //console.log(cart)
+            /* const newTicket = await TicketModel.create({
+                purchaser: email,
+                code: ticketCode(),                
                 purchase_dateTime: Date.toString(),
                 amount: totalPurchase(),
-                purchaser
-            })
+            }) */
+
 
 
         } catch (error) {
-
+            console.log(error)
+            res.json(error)
         }
 
 

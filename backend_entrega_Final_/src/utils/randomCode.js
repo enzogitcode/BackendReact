@@ -14,3 +14,7 @@ export function generateMixedCode() {
     const mixedCode = firstLetter + secondLetter + thirdLetter + formattedNumber;
     return mixedCode;
 }
+export function ticketCode() {
+    const ticketCode= generateMixedCode() + '-' + generateMixedCode() + '-' + generateMixedCode() + '-' + generateMixedCode()
+    return ticketCode
+}
