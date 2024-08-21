@@ -1,5 +1,5 @@
-export const totalPurchase = (product) => {
-let total= 0
-total= product.quantity
-console.log(product.quantity)
+export const totalPurchase = (totalProducts) => {
+    let totalByProducts = totalProducts.map(item => (item.quantity * item.product.price))
+    let total = totalByProducts.reduce((acc, item) => parseInt(acc + item), 0)
+    return total
 }

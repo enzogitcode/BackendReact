@@ -2,6 +2,7 @@ import CartRepository from "../repositories/cart.repository.js"
 const cartRepository = new CartRepository()
 import ProductRepository from '../repositories/product.repository.js'
 const productRepository = new ProductRepository()
+import UserModel from "../models/user.model.js"
 import TicketModel from "../models/ticket.model.js"
 import { v4 as uuidv4 } from 'uuid'
 import { ticketCode } from '../utils/randomCode.js'
@@ -133,28 +134,51 @@ class CartController {
 
     }
     async purchase(req, res) {
-        const cartId = req.params.cid
+        //const { cid } = req.params
+        const cartId= req.params.cid
         try {
             const cart = await cartRepository.getCartById(cartId)
             if (!cart) {
                 console.log("No existe un carrito con ese Id")
                 res.json({ message: "No existe un carrito con ese Id" })
             }
-            let total= []
-            cart.products.forEach(item => total.push(item.quantity * item.product.price))
-const totalFinal= total.reduce((acc, item) => parseInt(acc + item), 0)
-            console.log(total)
-            res.json({ totalFinal })
-            //console.log(cart)
-            /* const newTicket = await TicketModel.create({
-                purchaser: email,
-                code: ticketCode(),                
-                purchase_dateTime: Date.toString(),
-                amount: totalPurchase(),
-            }) */
+            let totalProducts = cart.products
 
+            let notAvaibles = []
 
-
+            for (const item of totalProducts) {
+                const productId = item.product;
+                const product = await productRepository.updateProduct(productId);
+                if (product.stock >= item.quantity) {
+                    product.stock -= item.quantity
+                    await product.save();
+                }
+                else {
+                    //notAvaibles.push({"productNotAvaible": productId, "quantityNotAvaible": (product.stock - item.quantity)});
+                    notAvaibles.push(productId)
+                }
+            }
+            
+            console.log(notAvaibles)
+            
+            
+            const userCarts = await UserModel.findOne({ carts: cartId });
+            if (!userCarts) {
+                res.json({ message: "No existe el usuario" })
+            }
+            
+            const newTicket = await TicketModel.create({
+                purchaser: userCarts._id,
+                code: ticketCode(),
+                purchase_dateTime: new Date,
+                amount: totalPurchase(totalProducts),
+            })
+            cart.products = cart.products.filter(item => notAvaibles.some(productId => productId.equals(item.product)));
+            
+            await newTicket.save() 
+            
+            await cartRepository.clearCart(cartId)
+            
         } catch (error) {
             console.log(error)
             res.json(error)
