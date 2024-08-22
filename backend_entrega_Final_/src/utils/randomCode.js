@@ -1,10 +1,8 @@
+//Código de 3 letras y 3 números para los productos
 export function generateMixedCode() {
-    // Get a random number between 0 and 999
     const randomNumber = Math.floor(Math.random() * 1000);
-    // Format the number with leading zeros if necessary
-    const formattedNumber = parseInt(randomNumber.toString().padStart(3, '0'));
+    const formattedNumber = (randomNumber.toString().padStart(3, '0'));
 
-    // Get three random letters from the alphabet
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
     const firstLetter = alphabet[Math.floor(Math.random() * 26)];
     const secondLetter = alphabet[Math.floor(Math.random() * 26)];
@@ -14,7 +12,13 @@ export function generateMixedCode() {
     const mixedCode = firstLetter + secondLetter + thirdLetter + formattedNumber;
     return mixedCode;
 }
+//Código random para los tickets
 export function ticketCode() {
     const ticketCode= generateMixedCode() + '-' + generateMixedCode() + '-' + generateMixedCode() + '-' + generateMixedCode()
     return ticketCode
+}
+//Código ResetToken
+export function generateResetToken(){
+    const token = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+    return token.toString();
 }

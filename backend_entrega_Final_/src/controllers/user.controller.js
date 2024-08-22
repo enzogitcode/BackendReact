@@ -10,7 +10,10 @@ import { createHash, isValidPassword } from '../utils/hashbcrypt.js'
 import jwt from 'jsonwebtoken'
 import config from '../config/config.js'
 const SECRET = config.SECRET
-import { uploader } from '../middleware/multer.js'
+import EmailManager from '../services/email.js'
+const emailManager = new EmailManager();
+import { generateResetToken } from '../utils/randomCode.js'
+
 /* import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -244,6 +247,53 @@ class UserController {
         } catch (error) {
             console.log(error)
             res.json(error)
+        }
+    }
+    async requestPasswordReset(req, res) {
+        const { email } = req.body
+        try {
+            const user = await UserModel.findOne({ email })
+            if (!user) {
+                return res.status(404).send("Usuario no encontrado")
+
+            }
+            const token = generateResetToken();
+            user.resetToken = {
+                token: token,
+                expire: new Date(Date.now() + 3600000)
+            }
+            await user.save()
+            await emailManager.sendEmailResetPassword(email, user.first_name, token)
+            console.log(user, token)
+            res.json({ user, token })
+        } catch (error) {
+            res.status(500).send("Error interno del servidor")
+        }
+    }
+    async resetPassword(req, res) {
+        const { email, password, token } = req.body
+        try {
+            const user = await UserModel.find({ email })
+            if (!user) {
+                console.log("usuario no encontrado")
+                res.json("usuario no encontrado")
+            }
+            const resetToken = user.resetToken
+            if (!resetToken || resetToken.token !== token) {
+                return res.json({ message: "El token es inválido" })
+            }
+            const nowDate = new Date()
+            if (nowDate > resetToken.expire) {
+                return res.json({ error: "el token es inválido" })
+            }
+            if (isValidPassword(password, user)) {
+                res.json({ error: "La nueva contraseña no puede ser igual a la anterior" })
+
+            }
+
+        } catch (error) {
+            console.log(error)
+
         }
     }
 }
