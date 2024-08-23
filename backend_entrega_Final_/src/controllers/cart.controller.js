@@ -4,7 +4,6 @@ import ProductRepository from '../repositories/product.repository.js'
 const productRepository = new ProductRepository()
 import UserModel from "../models/user.model.js"
 import TicketModel from "../models/ticket.model.js"
-import { v4 as uuidv4 } from 'uuid'
 import { ticketCode } from '../utils/randomCode.js'
 import { totalPurchase } from '../utils/totalPurchase.js'
 

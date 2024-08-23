@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { CustomInput, CustomButton } from '../generics/genericsModules'
+import { CustomInput, CustomButton } from '../Generics/genericsModules'
 const Register = () => {
   return (
     <div id='register'

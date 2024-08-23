@@ -1,17 +1,25 @@
-import React from 'react'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './users.css'
 import axios from 'axios'
 
-import { CustomButton, CustomInput, CustomBtnDangerDelete } from '../generics/genericsModules'
-import { Link } from 'react-router-dom'
+import { CustomButton, CustomInput, CustomBtnDangerDelete } from '../Generics/genericsModules'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setCredentials } from '../../features/auth/authSlice'
+import { useLoginMutation } from '../../features/auth/authApiSlice'
 
 const Login = () => {
-  const [data, setData] = useState({
-    email: "",
-    password: ""
-  });
+  const userRef = useRef()
+  const errRef = useRef()
+  const [user, setUser] = useState('')
+  const [pwd, setPwd] = useState('')
+  const [errMsg, setErrMsg] = useState('')
+  const navigate = useNavigate()
 
+  const [login, { isLoding }]= useLoginMutation()
+  const dispatch= useDispatch()
+  
+  
   const handleChange = (e) => {
     const value = e.target.value;
     setData({
@@ -36,7 +44,7 @@ const Login = () => {
       className='text-center d-flex flex-wrap flex-column align-items-center my-3'>
       <h2>Login</h2>
       <form
-      onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         className="px-5"
         id="formLoginContainer"
       >
@@ -56,7 +64,7 @@ const Login = () => {
           value={data.password}
           onChange={handleChange}
         />
-        <CustomButton title={"Login"} btnType={"onSubmit"}/>
+        <CustomButton title={"Login"} btnType={"onSubmit"} />
       </form>
       <p className='text-center'>¿Aún no estas registrado?</p>
       <Link to={`/register`}>Registrate</Link>

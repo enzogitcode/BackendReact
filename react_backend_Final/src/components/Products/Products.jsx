@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Card, Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
-import { CustomButton } from '../generics/genericsModules'
+import { CustomButton } from '../Generics/genericsModules'
 import { Link, NavLink } from 'react-router-dom'
 import { ProductDetails } from './modulosProducts'
 

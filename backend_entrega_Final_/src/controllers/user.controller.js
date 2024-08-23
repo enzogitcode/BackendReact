@@ -290,7 +290,11 @@ class UserController {
                 res.json({ error: "La nueva contraseña no puede ser igual a la anterior" })
 
             }
-
+            user.password = createHash(password)
+            user.resetToken = undefined;
+            await user.save()
+            res.json({ user })
+            return user
         } catch (error) {
             console.log(error)
 
