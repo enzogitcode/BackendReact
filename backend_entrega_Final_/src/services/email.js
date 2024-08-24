@@ -6,7 +6,7 @@ class EmailManager {
             service: "gmail",
             port: 587,
             auth: {
-                user: "islandersecommerce@gmail.com",
+                user: "etodocode@gmail.com",
                 pass: ""
             }
         })

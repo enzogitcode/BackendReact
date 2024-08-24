@@ -1,46 +1,27 @@
-import { Link } from 'react-router-dom'
-import { CustomInput, CustomButton } from '../Generics/genericsModules'
+import { useForm } from 'react-hook-form'
+import { registerRequest } from '../../service/config'
+
+const onSubmit = handleSubmit(async (values) => {
+  const res = await registerRequest(values)
+  console.log(res)
+})
 const Register = () => {
+  const { register, handleSubmit } = useForm()
+
   return (
-    <div id='register'
-      className='text-center d-flex flex-wrap flex-column align-items-center my-3'>
-              <h2>Register</h2>
-<form action="">
-      <CustomInput
-        inputName={'first_name'}
-        inputType={'text'}
-        inputPlaceholder={'primer nombre'}
-        labelText={'First Name'}
-      />
-      <CustomInput
-        inputName={'last_name'}
-        inputType={'text'}
-        inputPlaceholder={'last_name'}
-        labelText={'Last Name'}
-      />
-      <CustomInput
-        inputName={'age'}
-        inputType={'number'}
-        inputPlaceholder={'Age'}
-        labelText={'Age'}
-      />
-      <CustomInput
-        inputName={'email'}
-        inputType={'email'}
-        inputPlaceholder={'E-mail'}
-        labelText={'E-mail'}
-      />
-      <CustomInput
-        inputName={'password'}
-        inputType={'password'}
-        inputPlaceholder={'Password'}
-        labelText={'Password'}
-      />
-      <CustomButton title={"Registrate"}/>
-      </form>
-      <p className='text-center'>¿Aún no estas registrado?</p>
-      <Link to={`/login`}>Login</Link>
-    </div>
+    <div className='py-2'>
+      <form className='d-flex flex-column px-5'
+        onSubmit={onSubmit}>
+
+        <input type="text" {...register("first_name", { required: true })} name='first_name' placeholder='first name' />
+        <input type="text" {...register("last_name", { required: true })} name='last_name' placeholder='last name' />
+        <input type="number"{...register("age", { required: true })} name='age' placeholder='age' />
+        <input type="email" {...register("email", { required: true })} name='email' placeholder='email' />
+        <input type="password"{...register("password", { required: true })} name='password' placeholder='password' />
+        <button type='submit'></button>
+        <button type='submit'>Register</button>
+      </form >
+    </div >
   )
 }
 

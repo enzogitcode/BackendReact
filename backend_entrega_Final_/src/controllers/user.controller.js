@@ -46,14 +46,14 @@ class UserController {
             const userSaved = await newUser.save()
             console.log("Nuevo usuario creado", userSaved)
             const token = jwt.sign(
-                { user: userSaved }, //indica que dato quiero guardar
+                { user: userSaved }, 
                 config.SECRET,
                 { expiresIn: "24h" }
             )
             res.cookie("coderCookieToken", token, {
                 maxAge: 86400,
                 httpOnly: true
-            }).redirect('/api/users/profile')
+            }).json({message:userSaved})
 
         } catch (error) {
             console.log("Error al registrar el usuario", error)
@@ -78,7 +78,7 @@ class UserController {
             res.cookie("coderCookieToken", token, {
                 maxAge: 3600000,
                 httpOnly: true
-            }).redirect('/api/users/profile')
+            }).json({message:userSaved})
             //este redirect funciona
         } catch (error) {
             res.json(error)
@@ -88,7 +88,6 @@ class UserController {
     }
     async profile(req, res) {
         try {
-            //res.render("profile", { user: req.user.user })
             res.json({ user: req.user.user })
 
         } catch (error) {
@@ -116,7 +115,7 @@ class UserController {
             res.status(500).send("Error interno del servidor");
             return;
         }
-        res.clearCookie("coderCookieToken").redirect("/login")
+        res.clearCookie("coderCookieToken")
         //esta parte si
     }
 

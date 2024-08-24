@@ -3,7 +3,7 @@ import './generics.css'
 import { Link } from 'react-router-dom'
 
 const NavBar = () => {
-  const user = 'admin'
+  const user = 'null'
   if (user == 'premium') {
     return (
       <nav>
@@ -47,7 +47,7 @@ const NavBar = () => {
       <nav>
         <ul>
           <li>Rol: usuario</li>
-          <li>Productos</li>
+          <li><Link to={`api/products`}>Todos los productos</Link></li>
           <li>Chat</li>
           <li>
             <Link to={`/profile`}>
