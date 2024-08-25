@@ -5,36 +5,38 @@ import { Header, Footer, CustomError } from './components/Generics/genericsModul
 import { Login, Profile, Register, UsersList } from './components/Users/userModulo'
 import { Products, RealTimeProducts, MyProducts, ProductDetails } from './components/Products/modulosProducts'
 import AddProducts from './components/Products/AddProducts';
+import { AuthProvider } from './context/AllContext.jsx'
 export default function App() {
 
   return (
     <>
+      <AuthProvider>
+        <BrowserRouter>
+          <Header />
+          <main id='divCustomBody'>
 
-      <BrowserRouter>
-        <Header />
-        <main id='divCustomBody'>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              {/* Rutas para usuarios */}
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/api/users' element={<UsersList />} />
+              <Route path='/profile' element={<Profile />} />
+              {/* Rutas de productos */}
+              <Route path='/addproducts' element={<AddProducts />} />
+              <Route path='/myproducts' element={<MyProducts />} />
+              <Route path='/api/products' element={<Products />} />
+              <Route path='/api/products/:pid' element={<Products />} />
+              {/* Rutas del carrito */}
 
-          <Routes>
-            <Route path='/' element={<Home />} />
-            {/* Rutas para usuarios */}
-            <Route path='/login' element={<Login/>} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/api/users' element={<UsersList />} />
-            <Route path='/profile' element={<Profile />} />
-            {/* Rutas de productos */}
-            <Route path='/addproducts' element={<AddProducts />} />
-            <Route path='/myproducts' element={<MyProducts />} />
-            <Route path='/api/products' element={<Products />} />
-            <Route path='/api/products/:pid' element={<Products />} />
-            {/* Rutas del carrito */}
+              {/* Ruta inexistente */}
+              <Route path='*' element={<CustomError />} />
 
-            {/* Ruta inexistente */}
-            <Route path='*' element={<CustomError/>} />
-
-          </Routes>
-        </main>
-        <Footer />
-      </BrowserRouter>
+            </Routes>
+          </main>
+          <Footer />
+        </BrowserRouter>
+      </AuthProvider>
     </>
   )
 }

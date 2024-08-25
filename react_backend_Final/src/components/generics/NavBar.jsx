@@ -1,9 +1,12 @@
 import React from 'react'
 import './generics.css'
 import { Link } from 'react-router-dom'
+import {useAuth} from '../../context/AllContext'
 
 const NavBar = () => {
-  const user = 'null'
+const {user}= useAuth
+console.log(user)
+//const user= 'null'
   if (user == 'premium') {
     return (
       <nav>

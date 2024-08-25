@@ -44,16 +44,16 @@ class UserController {
             })
             await newCart.save()
             const userSaved = await newUser.save()
-            console.log("Nuevo usuario creado", userSaved)
+            console.log("Nuevo usuario creado:", userSaved)
             const token = jwt.sign(
-                { user: userSaved }, 
+                { user: userSaved },
                 config.SECRET,
                 { expiresIn: "24h" }
             )
             res.cookie("coderCookieToken", token, {
                 maxAge: 86400,
                 httpOnly: true
-            }).json({message:userSaved})
+            }).json({ message: userSaved })
 
         } catch (error) {
             console.log("Error al registrar el usuario", error)
@@ -66,7 +66,6 @@ class UserController {
             const user = await userRepository.getUserByEmail(email)
             if (!user) {
                 console.log("usuario no encontrado")
-                res.json("usuario no encontrado")
             }
             const isValid = isValidPassword(password, user);
             if (!isValid) {
@@ -78,20 +77,27 @@ class UserController {
             res.cookie("coderCookieToken", token, {
                 maxAge: 3600000,
                 httpOnly: true
-            }).json({message:userSaved})
+            }).json({ userSaved })
             //este redirect funciona
         } catch (error) {
             res.json(error)
             console.log(error)
         }
-
     }
     async profile(req, res) {
+        const token = req.cookies["coderCookieToken"]
         try {
-            res.json({ user: req.user.user })
-
+            if (token) {
+                const decoded = jwt.verify(token, SECRET)
+                req.user = decoded
+                res.json({ decoded })
+            }
+            else {
+                res.send({ message: "No se encuentra el token" })
+            }
         } catch (error) {
             console.log(error)
+            res.json({ error })
         }
     }
 
@@ -210,10 +216,10 @@ class UserController {
 
             const deletedUser = await UserModel.findByIdAndDelete(userId)
             if (!user) {
-                res.json({ message: "no existe un user con ese Id" })
+                console.log({ message: "no existe un user con ese Id" })
             }
 
-            console.log("usuario eliminado con éxito", user, deletedUser, carts)
+            res.json("usuario eliminado con éxito" + deletedUser + user.carts)
 
         } catch (error) {
             console.log(error)

@@ -1,12 +1,18 @@
 import { useForm } from 'react-hook-form'
-import { registerRequest } from '../../service/config'
-
-const onSubmit = handleSubmit(async (values) => {
-  const res = await registerRequest(values)
-  console.log(res)
-})
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AllContext'
 const Register = () => {
   const { register, handleSubmit } = useForm()
+  const { signup, isAuthenticated } = useAuth()
+  const onSubmit = handleSubmit(async (values) => {
+    signup(values)
+  })
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (isAuthenticated) { navigate('/profile') }
+  }, [isAuthenticated])
+
 
   return (
     <div className='py-2'>

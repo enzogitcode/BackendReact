@@ -1,8 +1,13 @@
 import React from 'react'
+import {useAuth} from '../../context/AllContext'
 
 const Profile = () => {
+  
+  
   return (
-    <div>Profile</div>
+    <div>Profile
+      <p>Hola</p>
+    </div>
   )
 }
 

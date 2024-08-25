@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react'
 import { CustomButton } from '../Generics/genericsModules'
 import { Link, NavLink } from 'react-router-dom'
 import AsideCategories from './AsideCategories'
+import { apiURL, registerRequest } from '../../service/config'
 
 
 const Products = () => {
     const [products, setProducts] = useState([])
     const fetchData = async () => {
-        const response = await axios.get('http://localhost:8080/api/products/')
+        const response = await axios.get(`${apiURL}/products/`)
         return setProducts(response.data)
     }
     useEffect(() => {
@@ -27,6 +28,7 @@ const Products = () => {
                     <Card.Text>Precio: $ {products.price}</Card.Text>
                     <Card.Text>Stock: {products.stock}</Card.Text>
                     <NavLink to={`/api/products/`}><CustomButton title={"Ver detalles"} /></NavLink>
+                    {/* <NavLink onClick={handleDelete}><CustomButton title={"Eliminar"} /></NavLink> */}
                 </div>))}
             </div>
         </div>
