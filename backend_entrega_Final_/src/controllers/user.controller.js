@@ -14,13 +14,6 @@ import EmailManager from '../services/email.js'
 const emailManager = new EmailManager();
 import { generateResetToken } from '../utils/randomCode.js'
 
-/* import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename); */
-
-
 class UserController {
     async register(req, res) {
         let { first_name, last_name, email, age, password, carts, role, documents, last_connection } = req.body
@@ -72,12 +65,12 @@ class UserController {
                 return res.status(401).send("Contraseña incorrecta");
             }
             user.last_connection = new Date()
-            const userSaved = await user.save()
-            const token = jwt.sign({ user: userSaved }, SECRET, { expiresIn: "24h" })
+            await user.save()
+            const token = jwt.sign({ user }, SECRET, { expiresIn: "24h" })
             res.cookie("coderCookieToken", token, {
                 maxAge: 3600000,
                 httpOnly: true
-            }).json({ userSaved })
+            }).json({ user })
             //este redirect funciona
         } catch (error) {
             res.json(error)

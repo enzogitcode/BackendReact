@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AllContext'
+import { useAuthContext } from '../../context/AuthContext'
 const Register = () => {
   const { register, handleSubmit } = useForm()
-  const { signup, isAuthenticated } = useAuth()
+  const { signup, isAuthenticated } = useAuthContext()
   const onSubmit = handleSubmit(async (values) => {
     signup(values)
   })

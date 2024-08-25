@@ -1,8 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Card } from 'react-bootstrap'
+import { useAuthContext } from '../../context/AuthContext'
+
 
 const AddProducts = () => {
+
+  const [owner, setOwner] = useState('')
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
@@ -11,7 +15,7 @@ const AddProducts = () => {
   const [img, setImg] = useState('')
   const [showProduct, setShowProduct] = useState(false);
 
-  const newProduct = { title, category, price, stock, description, img }
+  const newProduct = { title, category, price, stock, description, img, owner }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -21,7 +25,7 @@ const AddProducts = () => {
       setShowProduct(true)
       CardProduct()
       //cardproduct debe ir después sino toma los inputs vacíos
-      
+
       clearForm()
 
     } catch (error) {
@@ -35,35 +39,42 @@ const AddProducts = () => {
     setStock("")
     setCategory("")
     setImg('')
+    setOwner('')
   }
-const product = axios.get('http://localhost:8080/api/products')
+  const product = axios.get('http://localhost:8080/api/products')
   return (
     <div id='addProductsContainer' className='d-inline-flex flex-wrap'>
 
       <form className='d-flex flex-column flex-wrap' encType='multipart/form-data' onSubmit={handleSubmit}>
+
+
+        <label htmlFor='owner' className='bg-white'>Owner</label>
+        <input name='owner' value={owner}
+          onChange={(e) => setOwner(e.target.value)} required />
+
+        <label htmlFor='title' className='bg-white'>Title</label>
         <input name='title' value={title}
           onChange={(e) => setTitle(e.target.value)} required />
-        <label htmlFor='title' className='bg-white'>Title</label>
 
+        <label htmlFor='description' className='bg-white'>Description</label>
         <input name='description' value={description}
           onChange={(e) => setDescription(e.target.value)} required />
-        <label htmlFor='description' className='bg-white'>Description</label>
 
+        <label htmlFor='Price' className='bg-white'>Price</label>
         <input type='number' name='Price' value={price}
           onChange={(e) => setPrice(e.target.value)} required='true' />
-        <label htmlFor='Price' className='bg-white'>Price</label>
 
+        <label htmlFor='Stock' className='bg-white'>Stock</label>
         <input type='number' name='Stock' value={stock}
           onChange={(e) => setStock(e.target.value)} required />
-        <label htmlFor='Stock' className='bg-white'>Stock</label>
 
+        <label htmlFor='category' className='bg-white'>Category</label>
         <input type='text' name='category' value={category}
           onChange={(e) => setCategory(e.target.value)} />
-        <label htmlFor='category' className='bg-white'>Category</label>
 
+        <label htmlFor='img' className='bg-white'>Imágenes</label>
         <input type='file' name='img' value={img}
           onChange={(e) => setCategory(e.target.value)} />
-        <label htmlFor='img' className='bg-white'>Category</label>
         <button type='submit' onSubmit={CardProduct}>Submit</button>
       </form>
       <button onClick={clearForm}>Limpiar formulario</button>

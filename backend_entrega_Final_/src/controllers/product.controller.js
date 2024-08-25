@@ -15,7 +15,7 @@ class ProductController {
         let productId = req.params.pid
         try {
             const product = await productRepository.getProductById(productId);
-            //res.render('productDetails', { product: product })
+            
             res.json(product)
         } catch (error) {
             console.log(error)

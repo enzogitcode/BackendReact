@@ -14,7 +14,7 @@ const MyProducts = () => {
     useEffect(() => {
         fetchData()
     }, [])
-    const adminProducts = products.filter((item) => item.owner == 'admin')
+    const adminProducts = products.filter((item) => item.owner == 'premium')
 console.log(adminProducts)
     return (
         <div className='d-flex flex-wrap gap-6 bg-lightblue'>

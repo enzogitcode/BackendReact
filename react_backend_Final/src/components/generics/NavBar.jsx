@@ -1,20 +1,21 @@
 import React from 'react'
 import './generics.css'
 import { Link } from 'react-router-dom'
-import {useAuth} from '../../context/AllContext'
+import {useAuthContext} from '../../context/AuthContext'
 
 const NavBar = () => {
-const {user}= useAuth
-console.log(user)
+const {user}= useAuthContext()
+const role= user?.user?.role
+console.log(role)
 //const user= 'null'
-  if (user == 'premium') {
+  if (role == 'premium') {
     return (
       <nav>
         <ul>
           <li>Rol: premium</li>
           <li><Link to={`/addproducts`} >Agregar un Producto</Link></li>
-          <li><Link to={`api/users/products`}>Mis Productos</Link></li>
-          <li><Link to={`api/users/products`}></Link></li>
+          <li><Link to={`/myproducts`}>Mis Productos</Link></li>
+          <li><Link to={`/api/products`}>Todos Los Productos</Link></li>
           <li>
             <Link to={`/profile`}>
               Profile
@@ -24,7 +25,7 @@ console.log(user)
       </nav>
     )
   }
-  else if (user == 'admin') {
+  else if (role == 'admin') {
     return (
       <nav><ul>
         <li>Rol: Admin</li>
@@ -45,7 +46,7 @@ console.log(user)
       </nav>
     )
   }
-  else if (user == 'user') {
+  else if (role == 'user') {
     return (
       <nav>
         <ul>

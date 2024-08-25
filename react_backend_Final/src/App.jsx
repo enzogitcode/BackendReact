@@ -2,10 +2,10 @@ import './App.css'
 import { BrowserRouter, Routes, Router, Route } from 'react-router-dom';
 import Home from './components/Generics/Home';
 import { Header, Footer, CustomError } from './components/Generics/genericsModules'
-import { Login, Profile, Register, UsersList } from './components/Users/userModulo'
+import { Login, Profile, Register, UsersList, UploadDocs } from './components/Users/userModulo'
 import { Products, RealTimeProducts, MyProducts, ProductDetails } from './components/Products/modulosProducts'
 import AddProducts from './components/Products/AddProducts';
-import { AuthProvider } from './context/AllContext.jsx'
+import { AuthProvider } from './context/AuthContext.jsx'
 export default function App() {
 
   return (
@@ -22,6 +22,7 @@ export default function App() {
               <Route path='/register' element={<Register />} />
               <Route path='/api/users' element={<UsersList />} />
               <Route path='/profile' element={<Profile />} />
+              <Route path='/users/upload' element={<UploadDocs />} />
               {/* Rutas de productos */}
               <Route path='/addproducts' element={<AddProducts />} />
               <Route path='/myproducts' element={<MyProducts />} />

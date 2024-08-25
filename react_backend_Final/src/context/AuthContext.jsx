@@ -2,16 +2,16 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { loginRequest, registerRequest } from "../service/config";
 //import Cookies from "js-cookie";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
-export const useAuth = () => {
+export const useAuthContext = () => {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within a AuthProvider");
   return context;
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   //const [errors, setErrors] = useState([]);
   //const [loading, setLoading] = useState(true);
