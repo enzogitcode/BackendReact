@@ -44,8 +44,10 @@ class UserController {
                 { expiresIn: "24h" }
             )
             res.cookie("coderCookieToken", token, {
+                
                 maxAge: 86400,
                 httpOnly: true
+
             }).json({ message: userSaved })
 
         } catch (error) {

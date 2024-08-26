@@ -16,7 +16,7 @@ const Footer = () => {
     }
     else {
       return (
-        <div className='divFooter'></div>
+        <div className='divFooter'>Footer</div>
       )
     }
 }

@@ -1,5 +1,3 @@
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 
 const CustomInput =({inputName, inputType, inputId, inputPlaceholder, labelFor, labelText, value, handleChange }) => {
   

@@ -21,6 +21,11 @@ console.log(role)
               Profile
             </Link>
           </li>
+          <li>
+            <Link to={`/profile`}>
+              Logout
+            </Link>
+          </li>
         </ul>
       </nav>
     )
@@ -42,6 +47,11 @@ console.log(role)
             Profile
           </Link>
         </li>
+        <li>
+          <Link>
+            Logout
+          </Link>
+        </li>
       </ul>
       </nav>
     )
@@ -58,6 +68,11 @@ console.log(role)
               Profile
             </Link>
           </li>
+          <li>
+          <Link>
+            Logout
+          </Link>
+        </li>
         </ul>
       </nav>
     )

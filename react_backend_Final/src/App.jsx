@@ -27,7 +27,7 @@ export default function App() {
               <Route path='/addproducts' element={<AddProducts />} />
               <Route path='/myproducts' element={<MyProducts />} />
               <Route path='/api/products' element={<Products />} />
-              <Route path='/api/products/:pid' element={<Products />} />
+              <Route path='/api/products/:pid' element={<ProductDetails />} />
               {/* Rutas del carrito */}
 
               {/* Ruta inexistente */}
