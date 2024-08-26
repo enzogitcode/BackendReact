@@ -18,9 +18,10 @@ const MyProducts = () => {
         fetchData()
     }, [])
     
-    const adminProducts = products.filter((item) => item.owner == user?.user?.email)
+    const adminProducts = products.filter((item) => item.owner == user.user.email)
 console.log(adminProducts)
     return (
+        user !== null?
         <div className='d-flex flex-wrap gap-6 bg-lightblue'>
             {adminProducts.map ((products) => (<div key={products._id} className='cardProduct text-center d-flex flex-column bg-white m-3 p-2 border-radius-xl text-wrap'>
                     <div>Título: {products.title}</div>
@@ -31,6 +32,10 @@ console.log(adminProducts)
                     <NavLink to={`/api/products/`}><CustomButton title={"Ver detalles"}/></NavLink>
             </div>))}
         </div>
+    :
+    <div>
+        No hay usuario
+    </div>
     )
 }
 

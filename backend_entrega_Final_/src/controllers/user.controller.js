@@ -37,18 +37,16 @@ class UserController {
             })
             await newCart.save()
             const userSaved = await newUser.save()
-            console.log("Nuevo usuario creado:", userSaved)
+            console.log("Nuevo usuario creado:", newUser)
             const token = jwt.sign(
-                { user: userSaved },
+                { user: newUser },
                 config.SECRET,
-                { expiresIn: "24h" }
+                { expiresIn: 360000000 }
             )
             res.cookie("coderCookieToken", token, {
-                
                 maxAge: 86400,
                 httpOnly: true
-
-            }).json({ message: userSaved })
+            }).json({ user:newUser })
 
         } catch (error) {
             console.log("Error al registrar el usuario", error)
@@ -72,7 +70,7 @@ class UserController {
             res.cookie("coderCookieToken", token, {
                 maxAge: 3600000,
                 httpOnly: true
-            }).json({ user })
+            }).json({user})
             //este redirect funciona
         } catch (error) {
             res.json(error)
