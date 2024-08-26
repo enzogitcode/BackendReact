@@ -41,7 +41,7 @@ class UserController {
             const token = jwt.sign(
                 { user: newUser },
                 config.SECRET,
-                { expiresIn: 360000000 }
+                { expiresIn: "24h" }
             )
             res.cookie("coderCookieToken", token, {
                 maxAge: 86400,
