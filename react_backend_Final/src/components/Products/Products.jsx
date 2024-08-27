@@ -3,11 +3,15 @@ import { useEffect, useState } from 'react'
 import { CustomButton } from '../Generics/genericsModules'
 import { Link, NavLink } from 'react-router-dom'
 //import AsideCategories from './AsideCategories'
-import { apiURL, registerRequest } from '../../service/config'
+import { apiURL } from '../../service/config'
+import { useAuthContext } from '../../context/AuthContext'
 
 
 const Products = () => {
+    const {user}= useAuthContext()
+
     const [products, setProducts] = useState([])
+    
     const fetchData = async () => {
         const response = await axios.get(`${apiURL}/products/`)
         const data= response.data
@@ -16,6 +20,7 @@ const Products = () => {
     useEffect(() => {
         fetchData()
     }, [])
+
 
     return (
         <div className='d-flex flex-wrap px-2 py-2'>
