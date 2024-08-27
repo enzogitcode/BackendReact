@@ -1,0 +1,9 @@
+/* itemCount */
+.itemCountContainer button{
+    font-family: islandLogo;
+    font-size: 1.1em;
+}
+.itemCountContainer p{
+    width:min-content;
+    font-size: 1.1em;
+}

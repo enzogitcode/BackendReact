@@ -13,7 +13,7 @@ const AddProducts = () => {
   const [price, setPrice] = useState('')
   const [stock, setStock] = useState('')
   const [category, setCategory] = useState('')
-  const [img, setImg] = useState('')
+  const [img, setImg] = useState([])
   const [showProduct, setShowProduct] = useState(false);
 
   const newProduct = { title, category, price, stock, description, img, owner }

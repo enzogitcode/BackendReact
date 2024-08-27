@@ -3,7 +3,7 @@ import './generics.css'
 
 const CustomBtnDangerDelete = ({title}) => {
   return (
-<button variant="danger" className='btnFonts'>{title}</button>
+<button variant="danger" className='btnFonts btn btn-danger text-center'>{title}</button>
 )
 }
 

@@ -44,7 +44,7 @@ class UserController {
                 { expiresIn: "24h" }
             )
             res.cookie("coderCookieToken", token, {
-                maxAge: 86400,
+                maxAge: 3600000,
                 httpOnly: true
             }).json({ user:newUser })
 
@@ -70,7 +70,7 @@ class UserController {
             res.cookie("coderCookieToken", token, {
                 maxAge: 3600000,
                 httpOnly: true
-            }).json({user})
+            }).send({user})
             //este redirect funciona
         } catch (error) {
             res.json(error)

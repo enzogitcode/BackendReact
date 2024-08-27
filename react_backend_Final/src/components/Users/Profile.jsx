@@ -14,7 +14,7 @@ const Profile = () => {
   if (user !== undefined) {
     return (
       <div className='profileContainer text-center py-4 mx-2 flex-column rounded-pill bg-white'>
-        <h1>Bienvenido a tu perfil</h1>
+        <h1>Bienvenido a tu profile</h1>
         <p>Nombre: {first_name}</p>
         <p>Apellido: {last_name}</p>
         <p>Edad: {age}</p>

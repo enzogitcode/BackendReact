@@ -1,11 +1,11 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import { loginRequest, registerRequest } from "../service/config";
 //import Cookies from "js-cookie";
 
 const AuthContext = createContext(null);
 
 export const useAuthContext = () => {
-  const context = useContext(AuthContext);
+  const context =useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within a AuthProvider");
   return context;
 };
@@ -42,7 +42,6 @@ export const AuthProvider = ({ children }) => {
   const signin = async (user) => {
     try {
       const res = await loginRequest(user);
-      console.log(res, user)
       setUser(res.data);
       setIsAuthenticated(true);
     } catch (error) {
