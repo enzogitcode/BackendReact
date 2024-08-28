@@ -14,14 +14,13 @@ const AddProducts = () => {
   const [price, setPrice] = useState('')
   const [stock, setStock] = useState('')
   const [category, setCategory] = useState('')
-  const [img, setImg] = useState([])
+  const [img, setImg] = useState("")
   const [showProduct, setShowProduct] = useState(false);
 
-  const newProduct = { title, category, price, stock, description, owner }
+  const newProduct = { title, category, price, stock, description, owner, img }
   const handleSubmit = (e) => {
     e.preventDefault()
     try {
-      //axios.post('http://localhost:8080/api/products', { ...newProduct })
       addProduct({...newProduct})
       .then(response => { console.log(response) })
       setShowProduct(true)
@@ -39,7 +38,7 @@ const AddProducts = () => {
     setDescription("")
     setStock("")
     setCategory("")
-    setImg([])
+    setImg("")
   }
   return (
     <div id='addProductsContainer' className='d-inline-flex flex-wrap'>

@@ -14,6 +14,7 @@ export const registerRequest = async (user) => await instance.post(`/users/regis
 
 export const loginRequest = async (user) => await instance.post(`/users/login`, user) 
 
+export const changeRole = async (user) => await instance.post(`/users/login`, user) 
 
 //products
 export const getProducts= async () => await instance.get(`/products`)
@@ -30,7 +31,11 @@ export const deleteProducts= async (pid)=> await instance.delete(`/products/${pi
 export const getCartById= async (cid) => await instance.get(`/carts/${cid}`)
 
 export const purchase= async (cid) => await instance.get(`/carts/${cid}`)
-/* export const getCartById= async (cid) => await instance.get(`/carts/${cid}`)
-export const getCartById= async (cid) => await instance.get(`/carts/${cid}`) */
+
+export const clearCart= async (cid) => await instance.delete(`/carts/${cid}`)
+
+export const updateCart= async (cid) => await instance.put(`/carts/${cid}`)
+
+export const updateQuantity= async (cid) => await instance.put(`/carts/${cid}`)
 
 export default instance

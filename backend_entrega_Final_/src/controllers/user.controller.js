@@ -13,16 +13,18 @@ const SECRET = config.SECRET
 import EmailManager from '../services/email.js'
 const emailManager = new EmailManager();
 import { generateResetToken } from '../utils/randomCode.js'
-
+import { isAdmin } from '../utils/isAdmin.js'
 class UserController {
     async register(req, res) {
-        let { first_name, last_name, email, age, password, carts, role, documents, last_connection } = req.body
+        let { first_name, last_name, email, age, password, documents, role, last_connection } = req.body
         try {
             const user = await userRepository.getUserByEmail(email)
             if (user) {
                 console.log("Ya hay un usuario registrado con ese email")
                 return res.status(400).send({ message: "El usuario ya existe" })
             }
+            
+
             const newCart = new CartModel();
             const newUser = new UserModel({
                 carts: newCart._id,
@@ -31,12 +33,13 @@ class UserController {
                 email,
                 age,
                 password: createHash(password),
-                role,
+                role: isAdmin(email, password, first_name),
                 documents,
                 last_connection
             })
             await newCart.save()
-            const userSaved = await newUser.save()
+            await newUser.save()
+
             console.log("Nuevo usuario creado:", newUser)
             const token = jwt.sign(
                 { user: newUser },
@@ -46,7 +49,7 @@ class UserController {
             res.cookie("coderCookieToken", token, {
                 maxAge: 3600000,
                 httpOnly: true
-            }).json({ user:newUser })
+            }).json({ user: newUser })
 
         } catch (error) {
             console.log("Error al registrar el usuario", error)
@@ -64,13 +67,14 @@ class UserController {
             if (!isValid) {
                 return res.status(401).send("Contraseña incorrecta");
             }
+
             user.last_connection = new Date()
             await user.save()
             const token = jwt.sign({ user }, SECRET, { expiresIn: "24h" })
             res.cookie("coderCookieToken", token, {
                 maxAge: 3600000,
                 httpOnly: true,
-            }).send({user})
+            }).send({ user })
             //este redirect funciona
         } catch (error) {
             res.json(error)
