@@ -39,7 +39,7 @@ const AddProducts = () => {
     setDescription("")
     setStock("")
     setCategory("")
-    setImg('')
+    setImg([])
   }
   return (
     <div id='addProductsContainer' className='d-inline-flex flex-wrap'>
