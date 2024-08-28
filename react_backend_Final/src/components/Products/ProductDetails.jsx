@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useContext } from 'react';
-import axios from 'axios';
-import { apiURL } from '../../service/config'
 import {useAuthContext} from '../../context/AuthContext'
 import { useParams } from "react-router-dom";
 import ItemCount from './ItemCount';
 import { cartContext } from '../../context/CartContext'
+import { getProductById } from '../../service/config';
+
 const ProductDetails = () => {
   const { addToCart } = useContext(cartContext)
   const {user} = useAuthContext()
@@ -24,7 +24,7 @@ const ProductDetails = () => {
   
 
   const fetchData = async () => {
-    const response = await axios.get(`${apiURL}/products/${pid}`)
+    const response= await getProductById(pid)
     const data = response.data
     const { title, code, img, category, description, owner, stock, price } = response.data
     setTitle(title)
@@ -61,6 +61,8 @@ const ProductDetails = () => {
           <p className="card-text">Descripción: {description}</p>
           <p className="card-text">Precio: $ {price}</p>
           <p className="card-text">Stock: {stock}</p>
+          <p className="card-text">Categoría: {category}</p>
+          <p className="card-text">Código Único: {code}</p>
           <p className="card-text">Propietario: {owner}</p>
         </div>
         <ItemCount stock={stock} initialCounter={1} addQuantity={handleQuantity} />
