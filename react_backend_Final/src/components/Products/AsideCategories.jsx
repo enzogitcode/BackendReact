@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import config from '../../service/config'
 import { NavLink } from 'react-router-dom'
 import { CustomButton } from '../Generics/genericsModules'
 
 const AsideCategories = () => {
   const [products, setProducts] = useState([])
   const fetchData = async () => {
-    const response = await axios.get('http://localhost:8080/api/products/')
+    const response = await instance.get('http://localhost:8080/api/products/')
     return setProducts(response.data)
   }
   useEffect(() => {

@@ -19,7 +19,13 @@ app.get("/loggerTest", (req, res) => {
 })
 
 import cors from 'cors'
-app.use(cors())
+app.use(cors(
+
+    {
+        origin: `http://localhost:5173`,
+        credentials: true
+    }
+))
 
 import passport from 'passport';
 import { initializePassport } from './src/config/passport.config.js';

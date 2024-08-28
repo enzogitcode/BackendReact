@@ -1,13 +1,14 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form';
 import { useAuthContext } from '../../context/AuthContext'
+import config from '../../service/config'
+import {addProduct} from '../../service/config';
 
 
 const AddProducts = () => {
 
   const { user } = useAuthContext()
-  const [owner, setOwner] = useState("")
+  const owner= user?.user?.email
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
@@ -16,13 +17,13 @@ const AddProducts = () => {
   const [img, setImg] = useState([])
   const [showProduct, setShowProduct] = useState(false);
 
-  const newProduct = { title, category, price, stock, description, img, owner }
+  const newProduct = { title, category, price, stock, description, owner }
   const handleSubmit = (e) => {
     e.preventDefault()
     try {
-      axios.post('http://localhost:8080/api/products', { ...newProduct })
+      //axios.post('http://localhost:8080/api/products', { ...newProduct })
+      addProduct({...newProduct})
       .then(response => { console.log(response) })
-      setOwner(user?.user?.email)
       setShowProduct(true)
       CardProduct()
       //cardproduct debe ir después sino toma los inputs vacíos
@@ -40,7 +41,6 @@ const AddProducts = () => {
     setCategory("")
     setImg('')
   }
-  const product = axios.get('http://localhost:8080/api/products')
   return (
     <div id='addProductsContainer' className='d-inline-flex flex-wrap'>
 
@@ -67,8 +67,8 @@ const AddProducts = () => {
           onChange={(e) => setCategory(e.target.value)} />
 
         <label htmlFor='img' className='bg-white'>Imágenes</label>
-        <input type='file' name='img' value={img}
-          onChange={(e) => setCategory(e.target.value)} />
+        {/* <input type='file' name='img' value={img}
+          onChange={(e) => setImg(e.target.value)} required:false /> */}
         <button type='submit' onSubmit={CardProduct}>Submit</button>
       </form>
       <button onClick={clearForm}>Limpiar formulario</button>
@@ -87,6 +87,7 @@ const CardProduct = ({ newProduct }) => {
     <div>Código único:{newProduct.code}</div>
     <div>Precio: $ {newProduct.price}</div>
     <div>Stock: {newProduct.stock}</div>
+    <div>Imágenes: {newProduct.img}</div>
   </div>;
 };
 

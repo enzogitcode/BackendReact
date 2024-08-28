@@ -28,7 +28,7 @@
         "title": "Extensión Cable USB",
         "description": "Extensión Cable USB",
         "price": 15000,
-        "img": "sin imagen",
+        "img": [],
         "code": "abc124",
         "stock": 25,
         "status": true,

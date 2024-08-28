@@ -177,6 +177,8 @@ class CartController {
             await newTicket.save() 
             
             await cartRepository.clearCart(cartId)
+
+            res.json({newTicket})
             
         } catch (error) {
             console.log(error)

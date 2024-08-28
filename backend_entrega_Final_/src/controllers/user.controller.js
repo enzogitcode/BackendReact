@@ -69,7 +69,7 @@ class UserController {
             const token = jwt.sign({ user }, SECRET, { expiresIn: "24h" })
             res.cookie("coderCookieToken", token, {
                 maxAge: 3600000,
-                httpOnly: true
+                httpOnly: true,
             }).send({user})
             //este redirect funciona
         } catch (error) {

@@ -5,28 +5,28 @@ import { Link, NavLink } from 'react-router-dom'
 //import AsideCategories from './AsideCategories'
 import { apiURL } from '../../service/config'
 import { useAuthContext } from '../../context/AuthContext'
-
+import config from '../../service/config'
 
 const Products = () => {
     const {user}= useAuthContext()
 
     const [products, setProducts] = useState([])
-    
+
     const fetchData = async () => {
-        const response = await axios.get(`${apiURL}/products/`)
+        const response= await config.get(`${apiURL}/products`)
         const data= response.data
         setProducts(data)
     }
     useEffect(() => {
         fetchData()
     }, [])
-
-
+const finalProducts= products.filter(products => products.owner !== user?.user?.email)
+console.log(finalProducts)
     return (
         <div className='d-flex flex-wrap px-2 py-2'>
             {/* <AsideCategories /> */}
             <div className="productsContainer d-flex flex-wrap gap-6 gap-6 bg-lightblue">
-                {products.map((products) => (<div key={products._id} className='cardProduct text-center d-flex flex-column bg-white m-3 p-2 border-radius-xl text-wrap'>
+                {finalProducts.map((products) => (<div key={products._id} className='cardProduct text-center d-flex flex-column bg-white m-3 p-2 border-radius-xl text-wrap'>
                     <div>Título: {products.title}</div>
                     <div>Descripción: {products.description}</div>
                     <div>Código único:{products.code}</div>
