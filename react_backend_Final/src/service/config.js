@@ -23,7 +23,7 @@ export const getProductById= async (pid) => await instance.get(`/products/${pid}
 
 export const addProduct= async (newProduct) => await instance.post(`/products`, newProduct)
 
-export const updateProducts= async (pid)=> await instance.put(`/products/${pid}`)
+export const updateProducts= async (pid, product)=> await instance.put(`/products/${pid}`, product)
 
 export const deleteProducts= async (pid)=> await instance.delete(`/products/${pid}`)
 
@@ -34,8 +34,8 @@ export const purchase= async (cid) => await instance.get(`/carts/${cid}`)
 
 export const clearCart= async (cid) => await instance.delete(`/carts/${cid}`)
 
-export const updateCart= async (cid) => await instance.put(`/carts/${cid}`)
+export const updateCart= async (cid, pid, quantity) => await instance.put(`/carts/${cid}/products/${pid}`, pid, quantity)
 
-export const updateQuantity= async (cid) => await instance.put(`/carts/${cid}`)
+export const updateQuantity= async (cid, pid, quantity) => await instance.put(`/carts/${cid}/products/${pid}`, pid, quantity)
 
 export default instance
