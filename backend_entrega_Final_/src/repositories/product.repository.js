@@ -82,7 +82,7 @@ class ProductRepository {
             if (!deletedProduct) {
                 console.log("No se encontró un producto con ese Id")
             }
-            console.log("Producto eliminado correctamente")
+            console.log("Producto eliminado correctamente de la base de datos: ", deletedProduct)
             return deletedProduct
         } catch (error) {
             console.log(error)

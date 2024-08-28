@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
 import { addProduct } from '../../service/config';
-import CustomButton from '../Generics/CustomButton';
+import {CustomButton} from '../Generics/genericsModules';
+import CardProduct from './CardProduct';
 import './products.css'
 
 
@@ -25,9 +26,7 @@ const AddProducts = () => {
       addProduct({ ...newProduct })
         .then(response => { console.log(response) })
       setShowProduct(true)
-      CardProduct()
       //cardproduct debe ir después sino toma los inputs vacíos
-      clearForm()
 
     } catch (error) {
       console.log(error)
@@ -41,21 +40,11 @@ const AddProducts = () => {
     setCategory("")
     setImg("")
   }
-  const CardProduct = ({ newProduct }) => {
-    return <div className='text-center'>
-      <h3>Producto creado con éxito: </h3>
-      <div>Título: {newProduct.title}</div>
-      <div>Descripción: {newProduct.description}</div>
-      <div>Código único:{newProduct.code}</div>
-      <div>Precio: $ {newProduct.price}</div>
-      <div>Stock: {newProduct.stock}</div>
-      <div>Imágenes: {newProduct.img}</div>
-    </div>;
-  };
+  
   return (
     <div id='addProductsContainer w-100' className='row align-items-center'>
       <h1 className='text-center'>Formulario para agregar un producto nuevo</h1>
-      <div className="addProductsFormContainer px-4 py-4 justify-content-center col">
+      <div className="addProductsFormContainer px-4 py-4 justify-content-center col border-end-2">
         <form className='d-flex flex-column flex-wrap gap-3 text-center' encType='multipart/form-data' onSubmit={handleSubmit}>
 
           <label htmlFor='title'>Title</label>
