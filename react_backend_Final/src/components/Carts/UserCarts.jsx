@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
-import { clearCart, getCartById } from '../../service/config'
-import { Link } from 'react-router-dom'
+import { clearCart, deleteProducts, getCartById, deleteProductCart, updateQuantity } from '../../service/config'
+import { Link, NavLink } from 'react-router-dom'
 import CustomButton from '../Generics/CustomButton'
+import './carts.css'
 
 const UserCarts = () => {
   const { user } = useAuthContext()
@@ -11,6 +12,7 @@ const UserCarts = () => {
 
   const [total, setTotal] = useState(0)
   const [totalQuantity, setTotalQuantity] = useState(0)
+  const [showEditorQuantity, setShowEditorQuantity] = useState(false)
   const cartId = user?.user?.carts
 
   const fetchCarts = async () => {
@@ -33,22 +35,50 @@ const UserCarts = () => {
     alert('Vaciaste el carrito')
     fetchCarts()
   }
+  const handleDeleteProductCart= async (cartId, item) => {
+    await deleteProductCart(cartId, item.product._id)
+    alert(`Producto eliminado del carrito: ${item.product.title} , ${item.product._id}`)
+    fetchCarts()
+  }
+  const editorQuantity= () => {
+setShowEditorQuantity(true)
+  } 
+
+  const handleUpdateQuantity= async (cartId, item) => {
+    
+    await updateQuantity(cartId, item.product._id)
+    
+    alert(`Producto actualizado del carrito: ${item.product.title} , ${item.product._id}, nueva cantidad: ${item.quantity}`)
+    fetchCarts()
+  }
   return (
-    <div className='cartContainer'>
-      <h1 className='text-center pt-2'>Mi Carrito</h1>
-      <div className='itemCartContainer d-flex flex-wrap align-items-center justify-content-center gap-4 text-center'>
-        {products?.map(item => (
-          <div className='itemCart d-flex flex-column text-center' key={item._id}>
-            <h2>{item.product.title}</h2>
-            <p>Precio: ${item.product.price}</p>
-            <p>Cantidad: {item.quantity}</p>
-          </div>
-        ))}
-        <p>Cantidad total de productos: {totalQuantity}</p>
-        <p>Total: {total}</p>
-        <button onClick={() => handleClearDelete(cartId)}>Vaciar carrito</button>
+    <>
+      <h1 className='text-center m-2 cartTitle'>Mi Carrito</h1>
+      <div className='cartContainer text-center mb-3'>
+        <div className='itemCartContainer d-flex flex-wrap flex-column align-items-center justify-content-center gap-4 text-center'>
+          {products?.map(item => (
+            <div className='itemCart d-flex text-center rounded-pill flex-wrap gap-3 p-4 img-fluid justify-content-center' key={item._id}>
+              <h5 className='text-wrap'>{item.product.title}</h5>
+              <div>
+              <h5 className='text-wrap'>Precio: ${item.product.price}</h5>
+              </div>
+              <h5 className='text-wrap'>Cantidad: {item.quantity}</h5>
+              <button className='btn btn-primary rounded-pill'><NavLink to={`updated/${cartId}/products/${item.product._id}`}>Editar</NavLink></button>
+              <button className='btn btn-danger rounded-pill' onClick={() => handleDeleteProductCart(cartId, item)}>Eliminar del carrito</button>
+            </div>
+          ))}
+        </div>
+        <div className="totalContainer text-center mt-3">
+          <h5>Cantidad total de productos: {totalQuantity}</h5>
+          <h5>Total: $ {total}</h5>
+        </div>
+        <div className="buttonsContainer d-flex flex-wrap gap-3 justify-content-center align-items-center">
+          <button  className='btn btn-danger rounded-pill' onClick={() => handleClearDelete(cartId)}>Vaciar carrito</button>
+          <button className='btn btn-primary rounded-pill' onClick={() => handlePurchase(cartId)}>Finalizar compra</button>
+        </div>
       </div>
-    </div>
+    </>
+
   );
 };
 

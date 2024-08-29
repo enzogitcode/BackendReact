@@ -28,5 +28,8 @@ main {
     background-size:cover;
     object-fit: cover;
 }
+h1 {
+  font-family: islandLogo;
+}
 
 

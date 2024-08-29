@@ -9,6 +9,7 @@ import { AuthProvider } from './context/AuthContext.jsx'
 import { CartProvider } from './context/CartContext.jsx';
 import MyProductDetails from './components/Products/MyProductDetails.jsx';
 import UserCarts from './components/Carts/UserCarts.jsx';
+import EditItemCart from './components/Carts/EditItemCart.jsx';
 export default function App() {
 
   return (
@@ -35,6 +36,7 @@ export default function App() {
                 
                 {/* Rutas del carrito */}
                 <Route path='/api/carts/usercarts' element={<UserCarts />} />
+                <Route path='/api/carts/usercarts/updated/:cid/products/:pid' element={<EditItemCart />} />
 
                 {/* Ruta inexistente */}
                 <Route path='*' element={<CustomError />} />

@@ -34,6 +34,8 @@ export const addToCart= async (cid, pid, product, quantity) => await instance.po
 
 export const purchase= async (cid) => await instance.get(`/carts/${cid}`)
 
+export const deleteProductCart = async (cid, pid) => await instance.delete(`/carts/${cid}/products/${pid}`)
+
 export const clearCart= async (cid) => await instance.delete(`/carts/${cid}`)
 
 export const updateCart= async (cid, pid, quantity) => await instance.put(`/carts/${cid}/products/${pid}`, pid, quantity)

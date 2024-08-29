@@ -9,7 +9,8 @@ const Footer = () => {
       {isAuthenticated === false ? (
         <p>Usuario no autenticado. Por favor, inicia sesión.</p>
       ) : (
-        <p><Link to={`/api/carts/usercarts`}>Ver Carrito</Link></p>
+        
+        <h3 className='text-center'><Link to={`/api/carts/usercarts`}>Ver Carrito</Link></h3>
       )}
     </div>
   )
