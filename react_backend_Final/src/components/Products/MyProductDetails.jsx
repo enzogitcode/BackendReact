@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { deleteProducts, getProductById } from '../../service/config'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import {CustomBtnDangerDelete} from '../Generics/genericsModules'
 
 const MyProductDetails = () => {
     const { pid } = useParams()
@@ -37,8 +38,8 @@ const MyProductDetails = () => {
     }, [])
     const handleDeleteProduct = async (pid) => {
         await deleteProducts(pid)
+        alert(`producto eliminado: ${title}, código ${code}`)
         navigate('/myProducts')
-
     }
 
     return (
@@ -57,7 +58,7 @@ const MyProductDetails = () => {
                         <p className="card-text">Código Único: {code}</p>
                         <p className="card-text">Propietario: {owner}</p>
                     </div>
-                    <button onClick={() => handleDeleteProduct(pid)}>Eliminar producto</button>
+                    <CustomBtnDangerDelete onClick={() => handleDeleteProduct(pid)} title={'eliminar producto'}/>
                     <button>Editar Producto</button>
                 </div>
             </div>

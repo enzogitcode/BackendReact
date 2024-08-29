@@ -9,7 +9,6 @@ const Login = () => {
   const { signin, isAuthenticated } = useAuthContext()
   const onSubmit = handleSubmit((data) => {
     signin(data)
-    console.log(data)
   })
   const navigate = useNavigate()
   useEffect(() => {

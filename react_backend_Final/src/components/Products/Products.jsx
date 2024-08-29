@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { CustomButton } from '../Generics/genericsModules'
 import { Link, NavLink } from 'react-router-dom'
 //import AsideCategories from './AsideCategories'
-import { apiURL } from '../../service/config'
+import { apiURL, getCartById, getProducts } from '../../service/config'
 import { useAuthContext } from '../../context/AuthContext'
 import config from '../../service/config'
 
@@ -13,15 +13,15 @@ const Products = () => {
     const [products, setProducts] = useState([])
 
     const fetchData = async () => {
-        const response= await config.get(`${apiURL}/products`)
+        const response= await getProducts()
         const data= response.data
         setProducts(data)
+        
     }
     useEffect(() => {
         fetchData()
     }, [])
 const finalProducts= products.filter(products => products.owner !== user?.user?.email)
-console.log(finalProducts)
     return (
         <div className='d-flex flex-wrap px-2 py-2'>
             {/* <AsideCategories /> */}

@@ -8,6 +8,7 @@ import { Products, MyProducts, ProductDetails, AddProducts } from './components/
 import { AuthProvider } from './context/AuthContext.jsx'
 import { CartProvider } from './context/CartContext.jsx';
 import MyProductDetails from './components/Products/MyProductDetails.jsx';
+import UserCarts from './components/Carts/UserCarts.jsx';
 export default function App() {
 
   return (
@@ -17,7 +18,6 @@ export default function App() {
           <BrowserRouter>
             <Header />
             <main id='divCustomBody'>
-
               <Routes>
                 <Route path='/' element={<Home />} />
                 {/* Rutas para usuarios */}
@@ -32,7 +32,9 @@ export default function App() {
                 <Route path='/api/products' element={<Products />} />
                 <Route path='/api/products/:pid' element={<ProductDetails />} />
                 <Route path='/api/products/myproductdetails/:pid' element={<MyProductDetails />} />
+                
                 {/* Rutas del carrito */}
+                <Route path='/api/carts/usercarts' element={<UserCarts />} />
 
                 {/* Ruta inexistente */}
                 <Route path='*' element={<CustomError />} />
