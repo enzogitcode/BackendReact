@@ -70,7 +70,7 @@ class ProductRepository {
                 return null
             }
 
-            console.log("producto actualizado")
+            console.log("producto actualiszado")
             return product
         } catch (error) {
             console.log(error)

@@ -4,10 +4,10 @@ import {useAuthContext} from '../../context/AuthContext'
 import { useParams } from "react-router-dom";
 import ItemCount from './ItemCount';
 import { cartContext } from '../../context/CartContext'
-import { getProductById } from '../../service/config';
+import { getProductById, addToCart } from '../../service/config';
 
 const ProductDetails = () => {
-  const { addToCart } = useContext(cartContext)
+  //const { addToCart } = useContext(cartContext)
   const {user} = useAuthContext()
 
   const [product, setProduct] = useState(null)
@@ -45,9 +45,11 @@ const ProductDetails = () => {
 
   const handleQuantity = (quantity) => {
     setQuantity(quantity)
-    const item = { pid, title, price }
+    const product = { pid, title, price }
     const cartId= user?.user.carts
-    addToCart(cartId, item, quantity, pid)
+    alert(`Producto agregado al carrito: ${pid}, ${title}, ${price}; cantidad: ${quantity}`)
+    
+    addToCart(cartId, pid, product, quantity)
   }
 
   return (
