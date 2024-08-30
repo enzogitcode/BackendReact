@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { deleteProducts, getProductById } from '../../service/config'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import {  useNavigate, useParams } from 'react-router-dom'
 import {CustomBtnDangerDelete} from '../Generics/genericsModules'
 
 const MyProductDetails = () => {

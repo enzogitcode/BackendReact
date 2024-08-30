@@ -10,6 +10,7 @@ import { CartProvider } from './context/CartContext.jsx';
 import MyProductDetails from './components/Products/MyProductDetails.jsx';
 import UserCarts from './components/Carts/UserCarts.jsx';
 import EditItemCart from './components/Carts/EditItemCart.jsx';
+import Checkout from './components/Carts/Checkout.jsx'
 import ProtectedRoutes from './ProtectedRoutes.jsx';
 export default function App() {
 
@@ -38,6 +39,7 @@ export default function App() {
 
                   {/* Rutas del carrito */}
                   <Route path='/api/carts/usercarts/' element={<UserCarts />} />
+                  <Route path='/api/carts/usercarts/checkout' element={<Checkout />} />
                   <Route path='/api/carts/usercarts/updated/:cid/products/:pid' element={<EditItemCart />} />
 
                   {/* Ruta inexistente */}

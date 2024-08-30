@@ -132,7 +132,6 @@ class CartController {
 
     }
     async purchase(req, res) {
-        //const { cid } = req.params
         const cartId= req.params.cid
         try {
             const cart = await cartRepository.getCartById(cartId)
@@ -152,7 +151,6 @@ class CartController {
                     await product.save();
                 }
                 else {
-                    //notAvaibles.push({"productNotAvaible": productId, "quantityNotAvaible": (product.stock - item.quantity)});
                     notAvaibles.push(productId)
                 }
             }

@@ -17,7 +17,6 @@ router.get("/", cartController.getAllCarts)
 //creada por mí para eliminar carritos
 router.delete("/delete/:cid", cartController.deleteCart)
 
-//no funciona aún
 router.post("/:cid/purchase", cartController.purchase)
 
 export default router

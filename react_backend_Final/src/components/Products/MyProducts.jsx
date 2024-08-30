@@ -13,15 +13,15 @@ const MyProducts = () => {
     const [myProducts, setMyProducts] = useState([])
     const fetchData = async () => {
         const response = await getProducts()
-        if (email !== 'adminCoder@coder.com') {
-            const adminProducts = response.data.filter((item) => item.owner == user?.user?.email)
+        if (email == 'adminCoder@coder.com') {
+            const adminProducts = response.data.filter(item => 
+                item.owner == 'admin' ||item.owner == 'adminCoder@coder.com'
+              );
             setMyProducts(adminProducts)
-            console.log(adminProducts)
         }
         else {
-            const adminProducts = response.data.filter((item) => item.owner == 'admin' && 'adminCoder@coder.com')
+            const adminProducts = response.data.filter((item) => item.owner == user?.user?.email )
             setMyProducts(adminProducts)
-            console.log(adminProducts)
         }
     }
     useEffect(() => {

@@ -35,7 +35,7 @@ const role= user?.user?.role
         <li><Link to={`/addproducts`}>Agregar un producto</Link></li>
         <li><Link to={`/myproducts`}>Mis Productos</Link></li>
         <li>
-          <Link to={`api/products`}>Todos los productos</Link>
+          <Link to={`api/products`}>Productos de otros propietarios</Link>
         </li>
         <li>
           <Link to={`api/users`}>Todos los usuarios</Link>

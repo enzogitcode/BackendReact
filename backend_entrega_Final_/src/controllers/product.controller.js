@@ -48,7 +48,7 @@ class ProductController {
         let productId = req.params.pid
         try {
             const deletedProduct = await productRepository.deleteProductById(productId)
-            res.json(deletedProduct)
+            res.json({"Producto eliminado": deletedProduct})
         } catch (error) {
             res.json(error)
         }

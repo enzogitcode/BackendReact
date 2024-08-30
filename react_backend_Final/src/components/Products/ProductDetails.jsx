@@ -5,10 +5,16 @@ import ItemCount from './ItemCount';
 import { getProductById, addToCart } from '../../service/config';
 import { useContext } from 'react';
 import { cartContext } from '../../context/CartContext';
+import { deleteProducts } from '../../service/config';
+import { CustomBtnDangerDelete } from '../Generics/genericsModules';
+import { useNavigate } from 'react-router-dom';
 
 const ProductDetails = () => {
+  const navigate = useNavigate()
   const { user } = useAuthContext()
-  const cartId= user?.user.carts
+
+  const cartId = user?.user.carts
+  const role = user?.user.role
   const { updateCartContext } = useContext(cartContext)
   const [product, setProduct] = useState(null)
   const [title, setTitle] = useState(null)
@@ -51,6 +57,11 @@ const ProductDetails = () => {
     fetchData()
     updateCartContext(cartId)
   }
+  const handleDeleteProduct = async (pid) => {
+    await deleteProducts(pid)
+    alert(`producto eliminado: ${title}, código ${code}`)
+    navigate('/')
+  }
 
   return (
     <div className='text-center'>
@@ -67,10 +78,10 @@ const ProductDetails = () => {
           <p className="card-text">Código Único: {code}</p>
           <p className="card-text">Propietario: {owner}</p>
         </div>
-        {owner == user?.user?.email || 'admin'  ? 
-        null :
-        <ItemCount stock={stock} initialCounter={1} addQuantity={handleQuantity} />
-      }
+        {role !== 'admin' ?
+          <ItemCount stock={stock} initialCounter={1} addQuantity={handleQuantity} />
+          :
+          null}
       </div>
 
     </div>

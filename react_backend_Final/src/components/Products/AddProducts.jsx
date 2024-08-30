@@ -21,17 +21,13 @@ const AddProducts = () => {
   const [showProduct, setShowProduct] = useState(false);
   const newProduct = { title, category, price, stock, description, owner, img }
 
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       addProduct({ ...newProduct })
         .then(response => { console.log(response) })
       setShowProduct(true)
-      const data = new FormData()
-      data.append('img', img)
-      const res = await uploadDocs(userId, data)
-      console.log(res.data);
       alert('Nuevo producto creado')
       //cardproduct debe ir después sino toma los inputs vacíos
 

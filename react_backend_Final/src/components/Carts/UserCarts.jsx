@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
 import { clearCart, deleteProducts, getCartById, deleteProductCart, updateQuantity } from '../../service/config'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { cartContext } from '../../context/CartContext'
 import './carts.css'
 

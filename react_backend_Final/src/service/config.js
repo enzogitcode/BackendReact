@@ -16,6 +16,8 @@ export const loginRequest = async (user) => await instance.post(`/users/login`, 
 
 export const profileRequest = async () => await instance.get(`/users/profile`)
 
+export const deleteUser = async (uid) => await instance.delete(`/users/profile/${uid}`)
+
 export const logout = async () => await instance.post(`users/logout`)
 
 export const uploadDocs = async (uid, data) => await instance.put(`/users/${uid}/documents`, data)
@@ -38,7 +40,7 @@ export const getCartById = async (cid) => await instance.get(`/carts/${cid}`)
 
 export const addToCart = async (cid, pid, product, quantity) => await instance.post(`/carts/${cid}/products/${pid}`, { cid, pid, product, quantity })
 
-export const purchase = async (cid) => await instance.post(`/carts/${cid}`)
+export const purchase = async (cid) => await instance.post(`/carts/${cid}/purchase`)
 
 export const deleteProductCart = async (cid, pid) => await instance.delete(`/carts/${cid}/products/${pid}`)
 

@@ -23,5 +23,6 @@ router.post("/:uid/documents", uploader.fields([
 userController.uploadFiles)
 router.put("/premium/:uid", userController.changeRole)
 router.put("/cleardocs/:uid", userController.clearDocs)
+router.delete("/:uid", userController.deleteUser)
 
 export default router
