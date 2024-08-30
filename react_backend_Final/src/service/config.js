@@ -18,7 +18,7 @@ export const profileRequest = async () => await instance.get(`/users/profile`)
 
 export const logout = async () => await instance.post(`users/logout`)
 
-export const uploadDocs = async (user, uid) => await instance.put(`/users/${uid}/documents`, user)
+export const uploadDocs = async (uid, data) => await instance.put(`/users/${uid}/documents`, data)
 
 export const changeRole = async (user, uid) => await instance.put(`/users/premium/${uid}`, user)
 

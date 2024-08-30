@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
-import { addProduct } from '../../service/config';
-import {CustomButton} from '../Generics/genericsModules';
+import { addProduct, uploadDocs } from '../../service/config';
+import { CustomButton } from '../Generics/genericsModules';
 import CardProduct from './CardProduct';
 import './products.css'
 
@@ -11,6 +11,7 @@ const AddProducts = () => {
 
   const { user } = useAuthContext()
   const owner = user?.user?.email
+  const userId = user?.user?._id
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
@@ -18,14 +19,19 @@ const AddProducts = () => {
   const [category, setCategory] = useState('')
   const [img, setImg] = useState("")
   const [showProduct, setShowProduct] = useState(false);
-
   const newProduct = { title, category, price, stock, description, owner, img }
-  const handleSubmit = (e) => {
+
+  
+  const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       addProduct({ ...newProduct })
         .then(response => { console.log(response) })
       setShowProduct(true)
+      const data = new FormData()
+      data.append('img', img)
+      const res = await uploadDocs(userId, data)
+      console.log(res.data);
       alert('Nuevo producto creado')
       //cardproduct debe ir después sino toma los inputs vacíos
 
@@ -41,7 +47,7 @@ const AddProducts = () => {
     setCategory("")
     setImg("")
   }
-  
+
   return (
     <div id='addProductsContainer w-100' className='row align-items-center'>
       <h1 className='text-center'>Formulario para agregar un producto nuevo</h1>
@@ -69,11 +75,11 @@ const AddProducts = () => {
             onChange={(e) => setCategory(e.target.value)} />
 
           <label htmlFor='img' className=''>Imágenes</label>
-          {/* <input type='file' name='img' value={img}
-          onChange={(e) => setImg(e.target.value)} required:false /> */}
+          <input type='file' name='img' value={img}
+            onChange={(e) => setImg(e.target.value)} />
           <div className='d-flex justify-content-center text-center gap-4 p-3'>
-          <CustomButton title={'Limpiar formulario'} onClick={clearForm}>Limpiar formulario</CustomButton>
-          <CustomButton btnType={'submit'} onClick={CardProduct} title={'Enviar'}>Submit</CustomButton>
+            <CustomButton title={'Limpiar formulario'} onClick={clearForm}>Limpiar formulario</CustomButton>
+            <CustomButton btnType={'submit'} onClick={CardProduct} title={'Enviar'}>Submit</CustomButton>
           </div>
         </form>
       </div>

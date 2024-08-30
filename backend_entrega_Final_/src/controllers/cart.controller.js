@@ -76,7 +76,7 @@ class CartController {
             console.log("Producto eliminado correctamente")
             res.json(updatedCart)
         } catch (error) {
-            console.log(error)
+            res.status(500).send(error)
         }
 
     }
@@ -90,8 +90,7 @@ class CartController {
             res.json(cart)
 
         } catch (error) {
-            res.json(error)
-            console.log(error)
+            res.status(500).send(error)
         }
     }
     async updateCart(req, res) {

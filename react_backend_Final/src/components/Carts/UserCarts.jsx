@@ -32,7 +32,7 @@ const UserCarts = () => {
   }, [])
   useEffect(() => {
     updateCartContext(cartId)
-  })
+  }, [])
 
   const handleClearDelete = async (cartId) => {
     await clearCart(cartId)

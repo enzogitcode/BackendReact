@@ -32,7 +32,6 @@ const finalProducts= products.filter(products => products.owner !== user?.user?.
                     <div>Precio: $ {products.price}</div>
                     <div>Stock: {products.stock}</div>
                     <NavLink to={`/api/products/${products._id}`}><CustomButton title={"Ver detalles"} /></NavLink>
-                    {/* <NavLink onClick={handleDelete}><CustomButton title={"Eliminar"} /></NavLink> */}
                 </div>))}
             </div>
         </div>

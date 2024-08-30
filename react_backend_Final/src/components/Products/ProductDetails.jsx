@@ -8,6 +8,7 @@ import { cartContext } from '../../context/CartContext';
 
 const ProductDetails = () => {
   const { user } = useAuthContext()
+  const cartId= user?.user.carts
   const { updateCartContext } = useContext(cartContext)
   const [product, setProduct] = useState(null)
   const [title, setTitle] = useState(null)
@@ -36,8 +37,8 @@ const ProductDetails = () => {
     setProduct(data)
   }
   useEffect(() => {
-
     fetchData()
+    updateCartContext(cartId)
   }, [])
 
 
@@ -66,7 +67,10 @@ const ProductDetails = () => {
           <p className="card-text">Código Único: {code}</p>
           <p className="card-text">Propietario: {owner}</p>
         </div>
+        {owner == user?.user?.email || 'admin'  ? 
+        null :
         <ItemCount stock={stock} initialCounter={1} addQuantity={handleQuantity} />
+      }
       </div>
 
     </div>

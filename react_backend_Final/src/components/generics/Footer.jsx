@@ -17,7 +17,7 @@ const Footer = () => {
     return (
       <div className='divFooter'>
         <div className='d-flex text-center gap-3 m-3'>
-          Usuario Logueado {totalContext}
+          {totalContext > 0? <div>Usuario Logueado. Productos en el carrito: {totalQuantityContext}</div> : <div>Tu carrito está vacío</div>}
           <Link to={`api/carts/usercarts`}>
             <button className='btn btn-primary'>
               Ver Carrito
