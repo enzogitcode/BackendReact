@@ -26,6 +26,7 @@ const AddProducts = () => {
       addProduct({ ...newProduct })
         .then(response => { console.log(response) })
       setShowProduct(true)
+      alert('Nuevo producto creado')
       //cardproduct debe ir después sino toma los inputs vacíos
 
     } catch (error) {

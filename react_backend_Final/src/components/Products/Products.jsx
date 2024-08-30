@@ -1,11 +1,10 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { CustomButton } from '../Generics/genericsModules'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 //import AsideCategories from './AsideCategories'
-import { apiURL, getCartById, getProducts } from '../../service/config'
+import { getProducts } from '../../service/config'
 import { useAuthContext } from '../../context/AuthContext'
-import config from '../../service/config'
 
 const Products = () => {
     const {user}= useAuthContext()

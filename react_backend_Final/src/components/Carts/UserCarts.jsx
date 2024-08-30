@@ -2,12 +2,12 @@ import { useContext, useEffect, useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
 import { clearCart, deleteProducts, getCartById, deleteProductCart, updateQuantity } from '../../service/config'
 import { Link, NavLink } from 'react-router-dom'
-import CustomButton from '../Generics/CustomButton'
+import { cartContext } from '../../context/CartContext'
 import './carts.css'
 
 const UserCarts = () => {
   const { user } = useAuthContext()
-
+  const { updateCartContext } = useContext(cartContext)
   const [products, setProducts] = useState(null)
 
   const [total, setTotal] = useState(0)
@@ -25,29 +25,35 @@ const UserCarts = () => {
     setTotalQuantity(totalQuantity)
     setTotal(dataTotal)
     setProducts(resProd)
+    cartContext(cartId)
   }
   useEffect(() => {
     fetchCarts()
   }, [])
+  useEffect(() => {
+    updateCartContext(cartId)
+  })
 
   const handleClearDelete = async (cartId) => {
     await clearCart(cartId)
     alert('Vaciaste el carrito')
     fetchCarts()
+    updateCartContext(cartId)
   }
-  const handleDeleteProductCart= async (cartId, item) => {
+  const handleDeleteProductCart = async (cartId, item) => {
     await deleteProductCart(cartId, item.product._id)
     alert(`Producto eliminado del carrito: ${item.product.title} , ${item.product._id}`)
     fetchCarts()
+    updateCartContext(cartId)
   }
-  const editorQuantity= () => {
-setShowEditorQuantity(true)
-  } 
+  const editorQuantity = () => {
+    setShowEditorQuantity(true)
+  }
 
-  const handleUpdateQuantity= async (cartId, item) => {
-    
+  const handleUpdateQuantity = async (cartId, item) => {
+
     await updateQuantity(cartId, item.product._id)
-    
+
     alert(`Producto actualizado del carrito: ${item.product.title} , ${item.product._id}, nueva cantidad: ${item.quantity}`)
     fetchCarts()
   }
@@ -60,7 +66,7 @@ setShowEditorQuantity(true)
             <div className='itemCart d-flex text-center rounded-pill flex-wrap gap-3 p-4 img-fluid justify-content-center' key={item._id}>
               <h5 className='text-wrap'>{item.product.title}</h5>
               <div>
-              <h5 className='text-wrap'>Precio: ${item.product.price}</h5>
+                <h5 className='text-wrap'>Precio: ${item.product.price}</h5>
               </div>
               <h5 className='text-wrap'>Cantidad: {item.quantity}</h5>
               <button className='btn btn-primary rounded-pill'><NavLink to={`updated/${cartId}/products/${item.product._id}`}>Editar</NavLink></button>
@@ -73,7 +79,7 @@ setShowEditorQuantity(true)
           <h5>Total: $ {total}</h5>
         </div>
         <div className="buttonsContainer d-flex flex-wrap gap-3 justify-content-center align-items-center">
-          <button  className='btn btn-danger rounded-pill' onClick={() => handleClearDelete(cartId)}>Vaciar carrito</button>
+          <button className='btn btn-danger rounded-pill' onClick={() => handleClearDelete(cartId)}>Vaciar carrito</button>
           <button className='btn btn-primary rounded-pill' onClick={() => handlePurchase(cartId)}>Finalizar compra</button>
         </div>
       </div>

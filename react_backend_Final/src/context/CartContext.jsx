@@ -1,31 +1,49 @@
 import { useState, createContext } from 'react'
-import { getCartById, clearCart, purchase, updateCart, updateQuantity, addToCart } from '../service/config'
-import axios from 'axios'
-import { apiURL } from '../service/config'
+import { getCartById, clearCart, purchase, updateCart, updateQuantity, addToCart, getProductById } from '../service/config'
+import ItemCount from '../components/Products/ItemCount'
+import { useAuthContext } from './AuthContext'
+
 
 export const cartContext = createContext({
   cart: [],
-  total: 0,
-  totalQuantity: 0
+  totalContext: 0,
+  totalQuantityContext: 0
 })
 
+
 export const CartProvider = ({ children }) => {
+  const { user } = useAuthContext()
+  const cartId = user?.user?.carts
   const [cart, setCart] = useState([])
-  const [total, setTotal] = useState(0)
-  const [totalQuantity, setTotalQuantity] = useState(0)
+  const [totalContext, setTotalContext] = useState(0)
+  const [totalQuantityContext, setTotalQuantityContext] = useState(0)
 
   console.log(cart)
-  console.log("monto total: ", total)
-  console.log("cantidad de items", totalQuantity)
-  
+  console.log("monto total: ", totalContext)
+  console.log("cantidad de items", totalQuantityContext)
 
-  const addToCart = async (cartId, product, quantity, pid) => {
-    await axios.post(`${apiURL}/carts/${cartId}/products/${pid}`, { product, quantity })
+  const updateCartContext = async (cartId) => {
+    if (cartId !== undefined) {
+      const res = await getCartById(cartId)
+      const resProd = res.data.products
+      console.log(resProd)
+      setCart(resProd)
+      const dataTotal = resProd.map(item => (parseInt(item.product.price) * (item.quantity))).reduce((acc, item) => item + acc, 0)
+      console.log(dataTotal)
+      setTotalContext(dataTotal)
+      const totalQuantity = resProd.map((item) => item.quantity).reduce((acc, item) => acc + item, 0)
+      console.log(totalQuantity)
+      setTotalQuantityContext(totalQuantity)
+    }
   }
 
-  const clearCart = async (cartId) => {
-    await axios.get(`${apiURL}/carts/${cartId}`)
-    await axios.delete(`${apiURL}/carts/${cartId}`)
-  }
-  return (<cartContext.Provider value={{ cart, total, totalQuantity, addToCart, clearCart }}>{children}</cartContext.Provider>)
+  return (<cartContext.Provider value={{
+    cart,
+    totalContext,
+    totalQuantityContext,
+    updateCartContext
+
+  }}
+  >{children}
+  </cartContext.Provider>)
 }

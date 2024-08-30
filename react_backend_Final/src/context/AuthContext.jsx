@@ -1,11 +1,11 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { loginRequest, registerRequest } from "../service/config";
-//import Cookies from "js-cookie";
+import Cookies from "js-cookie"
 
 const AuthContext = createContext(null);
 
 export const useAuthContext = () => {
-  const context =useContext(AuthContext);
+  const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within a AuthProvider");
   return context;
 };
@@ -13,8 +13,8 @@ export const useAuthContext = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  //const [errors, setErrors] = useState([]);
-  //const [loading, setLoading] = useState(true);
+  const [errors, setErrors] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // clear errors after 5 seconds
   /* useEffect(() => {
@@ -48,17 +48,17 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
     } catch (error) {
       console.log(error);
-      // setErrors(error.response.data.message);
+      setErrors(error.response.data.message);
     }
   };
 
-  /* const logout = () => {
+  const logout = () => {
     Cookies.remove("token");
     setUser(null);
     setIsAuthenticated(false);
-  }; */
+  };
 
-  /* useEffect(() => {
+  useEffect(() => {
     const checkLogin = async () => {
       const cookies = Cookies.get();
       if (!cookies.token) {
@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
       }
     };
     checkLogin();
-  }, []); */
+  }, []);
 
   return (
     <AuthContext.Provider

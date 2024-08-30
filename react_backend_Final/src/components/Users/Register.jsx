@@ -16,7 +16,8 @@ const Register = () => {
 
   return (
     <div className='py-2'>
-      <form className='d-flex flex-column px-5'
+      <h1 className='text-center'>Formulario de Registro</h1>
+      <form className='d-flex flex-column px-5 '
         onSubmit={onSubmit}>
 
         <input type="text" {...register("first_name", { required: true })} name='first_name' placeholder='first name' />
@@ -25,7 +26,7 @@ const Register = () => {
         <input type="email" {...register("email", { required: true })} name='email' placeholder='email' />
         <input type="password"{...register("password", { required: true })} name='password' placeholder='password' />
         <button type='submit'></button>
-        <button type='submit'>Register</button>
+        <button type='submit' className='btn btn-primary'>Register</button>
       </form >
     </div >
   )

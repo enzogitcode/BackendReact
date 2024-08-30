@@ -1,6 +1,6 @@
 @font-face {
   font-family: islandLogo;
-  src: url('../src//assets/fonts/IslandFontLogoss.ttf');
+  src: url('/fonts/IslandFontLogoss.ttf');
 }
 * {
  margin: 0;

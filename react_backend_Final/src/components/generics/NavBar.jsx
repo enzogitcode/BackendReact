@@ -2,12 +2,12 @@ import React from 'react'
 import './generics.css'
 import { Link } from 'react-router-dom'
 import {useAuthContext} from '../../context/AuthContext'
+import { logout } from '../../service/config'
 
 const NavBar = () => {
 const {user}= useAuthContext()
 const role= user?.user?.role
-console.log(role)
-//const user= 'null'
+
   if (role == 'premium') {
     return (
       <nav>
@@ -21,10 +21,8 @@ console.log(role)
               Profile
             </Link>
           </li>
-          <li>
-            <Link to={`/profile`}>
+          <li onClick={logout}>
               Logout
-            </Link>
           </li>
         </ul>
       </nav>
