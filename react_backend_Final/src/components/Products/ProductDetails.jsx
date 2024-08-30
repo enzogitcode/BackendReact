@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useContext } from 'react';
-import {useAuthContext} from '../../context/AuthContext'
+import { useAuthContext } from '../../context/AuthContext'
 import { useParams } from "react-router-dom";
 import ItemCount from './ItemCount';
-import { cartContext } from '../../context/CartContext'
 import { getProductById, addToCart } from '../../service/config';
+import { useContext } from 'react';
+import { cartContext } from '../../context/CartContext';
 
 const ProductDetails = () => {
-  //const { addToCart } = useContext(cartContext)
-  const {user} = useAuthContext()
-
+  const { user } = useAuthContext()
+  const { updateCartContext } = useContext(cartContext)
   const [product, setProduct] = useState(null)
   const [title, setTitle] = useState(null)
   const [owner, setOwner] = useState("")
@@ -21,10 +20,9 @@ const ProductDetails = () => {
   const [img, setImg] = useState([])
   const [quantity, setQuantity] = useState(0)
   const { pid } = useParams();
-  
 
   const fetchData = async () => {
-    const response= await getProductById(pid)
+    const response = await getProductById(pid)
     const data = response.data
     const { title, code, img, category, description, owner, stock, price } = response.data
     setTitle(title)
@@ -35,10 +33,10 @@ const ProductDetails = () => {
     setStock(stock)
     setImg(img)
     setCode(code)
-
     setProduct(data)
   }
   useEffect(() => {
+
     fetchData()
   }, [])
 
@@ -46,10 +44,11 @@ const ProductDetails = () => {
   const handleQuantity = (quantity) => {
     setQuantity(quantity)
     const product = { pid, title, price }
-    const cartId= user?.user.carts
-    alert(`Producto agregado al carrito: ${pid}, ${title}, ${price}; cantidad: ${quantity}`)
-    
+    const cartId = user?.user.carts
     addToCart(cartId, pid, product, quantity)
+    alert(`Producto agregado al carrito: ${pid}, ${title}, ${price}; cantidad: ${quantity}`)
+    fetchData()
+    updateCartContext(cartId)
   }
 
   return (

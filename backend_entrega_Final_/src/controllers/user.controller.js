@@ -23,7 +23,7 @@ class UserController {
                 console.log("Ya hay un usuario registrado con ese email")
                 return res.status(400).send({ message: "El usuario ya existe" })
             }
-            
+
 
             const newCart = new CartModel();
             const newUser = new UserModel({
@@ -48,7 +48,8 @@ class UserController {
             )
             res.cookie("coderCookieToken", token, {
                 maxAge: 3600000,
-                httpOnly: true
+                httpOnly: true,
+                sameSite: 'none'
             }).json({ user: newUser })
 
         } catch (error) {
@@ -72,9 +73,10 @@ class UserController {
             await user.save()
             const token = jwt.sign({ user }, SECRET, { expiresIn: "24h" })
             res.cookie("coderCookieToken", token, {
+
                 maxAge: 3600000,
-                httpOnly: true,
-            }).send({ user })
+                httpOnly: true
+            }).json({user})
             //este redirect funciona
         } catch (error) {
             res.json(error)
@@ -82,20 +84,13 @@ class UserController {
         }
     }
     async profile(req, res) {
-        const token = req.cookies["coderCookieToken"]
         try {
-            if (token) {
-                const decoded = jwt.verify(token, SECRET)
-                req.user = decoded
-                res.json({ decoded })
-            }
-            else {
-                res.send({ message: "No se encuentra el token" })
-            }
+            console.log(req.user)
         } catch (error) {
             console.log(error)
             res.json({ error })
         }
+
     }
 
     async logout(req, res) {
@@ -107,8 +102,11 @@ class UserController {
                 const userId = decoded.user._id
                 //actualizar last_connection
                 const updatedUser = await UserModel.findByIdAndUpdate(userId)
-                updatedUser.last_connection = new Date();
-                await updatedUser.save()
+                if (updatedUser) {
+                    updatedUser.last_connection = new Date();
+                    await updatedUser.save()
+                }
+                res.clearCookie("coderCookieToken").json({updatedUser})
             }
             else {
                 res.send({ message: "No se encuentra el token" })
@@ -118,13 +116,11 @@ class UserController {
             res.status(500).send("Error interno del servidor");
             return;
         }
-        res.clearCookie("coderCookieToken")
         //esta parte si
     }
 
     async uploadFiles(req, res) {
         const { uid } = req.params
-        //const userId= req.params.uid
         try {
             const user = await UserModel.findByIdAndUpdate(uid)
             if (!user) {
@@ -134,7 +130,6 @@ class UserController {
             if (!req.files) {
                 return res.status(400).send({ status: "error", error: "No se pudo guardar la imagen" })
             }
-            //const profileArray = { name: (req.files.profile[0].filename), reference: (req.files.profile[0].path) }
             if (req.files.profile) {
                 req.files.profile.map(element => {
                     const profileObjects = { name: element.filename, reference: element.path }
