@@ -41,6 +41,7 @@ export const getCartById = async (cid) => await instance.get(`/carts/${cid}`)
 export const addToCart = async (cid, pid, product, quantity) => await instance.post(`/carts/${cid}/products/${pid}`, { cid, pid, product, quantity })
 
 export const purchase = async (cid) => await instance.post(`/carts/${cid}/purchase`)
+export const getTicket = async (cid) => await instance.get(`/carts/${cid}/purchase`)
 
 export const deleteProductCart = async (cid, pid) => await instance.delete(`/carts/${cid}/products/${pid}`)
 
