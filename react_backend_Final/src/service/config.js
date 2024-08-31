@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const apiURL = `http://localhost:8080/api`
+export const apiURL = `https://backend-entrega-final-8xc1.onrender.com/api`
 
 const instance = axios.create({
     baseURL: `${apiURL}`,
