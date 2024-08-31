@@ -39,7 +39,7 @@ export default function App() {
 
                   {/* Rutas del carrito */}
                   <Route path='/api/carts/usercarts/' element={<UserCarts />} />
-                  <Route path='/api/carts/usercarts/checkout' element={<Checkout />} />
+                  <Route path='/api/carts/usercarts/:uid/checkout' element={<Checkout />} />
                   <Route path='/api/carts/usercarts/updated/:cid/products/:pid' element={<EditItemCart />} />
 
                   {/* Ruta inexistente */}

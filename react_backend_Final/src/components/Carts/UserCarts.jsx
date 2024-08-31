@@ -14,6 +14,8 @@ const UserCarts = () => {
   const [totalQuantity, setTotalQuantity] = useState(0)
   const [showEditorQuantity, setShowEditorQuantity] = useState(false)
   const cartId = user?.user?.carts
+  const userId= user?.user?._id
+  console.log(userId)
 
   const fetchCarts = async () => {
     const res = await getCartById(cartId)
@@ -80,7 +82,7 @@ const UserCarts = () => {
         </div>
         <div className="buttonsContainer d-flex flex-wrap gap-3 justify-content-center align-items-center">
           <button className='btn btn-danger rounded-pill' onClick={() => handleClearDelete(cartId)}>Vaciar carrito</button>
-          <button className='btn btn-primary rounded-pill' onClick={() => handlePurchase(cartId)}>Finalizar compra</button>
+          <NavLink to={`${userId}/checkout`}><button className='btn btn-primary rounded-pill'>Finalizar compra</button></NavLink>
         </div>
       </div>
     </>
