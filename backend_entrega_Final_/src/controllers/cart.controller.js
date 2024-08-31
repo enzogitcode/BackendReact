@@ -90,7 +90,7 @@ class CartController {
             res.json(cart)
 
         } catch (error) {
-            res.status(500).send(error)
+            res.status(500).json(error)
         }
     }
     async updateCart(req, res) {
@@ -175,7 +175,7 @@ class CartController {
             
             await cartRepository.clearCart(cartId)
 
-            res.json({newTicket})
+            res.json(newTicket)
             
         } catch (error) {
             console.log(error)
