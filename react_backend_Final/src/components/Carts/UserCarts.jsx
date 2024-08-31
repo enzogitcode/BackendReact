@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
 import { clearCart, deleteProducts, getCartById, deleteProductCart, updateQuantity } from '../../service/config'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { cartContext } from '../../context/CartContext'
 import './carts.css'
 
 const UserCarts = () => {
   const { user } = useAuthContext()
+  const navigate= useNavigate()
   const { updateCartContext } = useContext(cartContext)
   const [products, setProducts] = useState(null)
 
@@ -16,7 +17,6 @@ const UserCarts = () => {
   const cartId = user?.user?.carts
   const userId= user?.user?._id
   console.log(userId)
-
   const fetchCarts = async () => {
     const res = await getCartById(cartId)
     const resProd = res.data.products
@@ -27,7 +27,7 @@ const UserCarts = () => {
     setTotalQuantity(totalQuantity)
     setTotal(dataTotal)
     setProducts(resProd)
-    cartContext(cartId)
+    updateCartContext(cartId)
   }
   useEffect(() => {
     fetchCarts()
@@ -76,14 +76,24 @@ const UserCarts = () => {
             </div>
           ))}
         </div>
+        {totalQuantity >0 ?
         <div className="totalContainer text-center mt-3">
           <h5>Cantidad total de productos: {totalQuantity}</h5>
           <h5>Total: $ {total}</h5>
         </div>
+        :
+        <div>
+          <h5>El carrito esta Vacío</h5>
+          <button className='btn btn-primary' onClick={() => navigate(-1)}>Volver</button>
+        </div>
+        }
+          {totalQuantity > 0 ?
         <div className="buttonsContainer d-flex flex-wrap gap-3 justify-content-center align-items-center">
           <button className='btn btn-danger rounded-pill' onClick={() => handleClearDelete(cartId)}>Vaciar carrito</button>
           <NavLink to={`${userId}/checkout`}><button className='btn btn-primary rounded-pill'>Finalizar compra</button></NavLink>
         </div>
+          : null
+          }
       </div>
     </>
 
